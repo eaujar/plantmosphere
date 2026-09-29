@@ -162,6 +162,11 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 .rules-box h3:first-child{margin-top:10px}
 .pay{margin:0;font-size:13px;background:#F2F8EA;border-radius:6px;padding:10px 12px;color:var(--ink)}
 .form label small{color:var(--ink-2);font-size:12px}
+
+.total{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:4px}
+.total .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-weight:700;font-size:15px}
+.total .row b{font-size:20px;letter-spacing:-.01em}
+.total .sub{font-size:12.5px;color:var(--ink-2)}
 </style>
 </head>
 <body>
@@ -321,6 +326,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
   <header><h2>공동구매 신청서</h2><button class="x" id="closeSheet" aria-label="닫기">×</button></header>
   <div class="body">
     <ul class="lines" id="lines"></ul>
+    <div class="total" id="total" aria-live="polite"></div>
     <div class="form">
       <label>이름 <small>(입금자명과 같아야 해요)</small><input id="f-name" autocomplete="name" required></label>
       <label>전화번호<input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
@@ -475,9 +481,22 @@ function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden
 
 /* 신청서 */
 const panel=document.getElementById("panel"), scrim=document.getElementById("scrim");
+function totals(){
+  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number);
+  const sum=nos.reduce((a,n)=>a+(PRICE_KRW[n]||0)*cart[n],0);
+  const unpriced=nos.filter(n=>!PRICE_KRW[n]);
+  return {sum, count:nos.reduce((a,n)=>a+cart[n],0), unpriced:unpriced.length};
+}
+function renderTotal(){
+  const t=totals(), el=document.getElementById("total");
+  if(!t.count){ el.innerHTML=""; return; }
+  el.innerHTML=`<div class="row"><span>최종 입금액</span><b class="mono">${t.sum.toLocaleString("ko-KR")}원</b></div>`+
+    `<div class="sub">${t.count}개체${t.unpriced?` · 가격 미정 ${t.unpriced}종은 확정 안내 때 금액을 더해 알려드립니다`:""}</div>`;
+}
 function renderSheet(){
   const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
   document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"미정"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없어요.</p><div></div></li>`;
+  renderTotal();
 }
 function openSheet(){ panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
 function closeSheet(){ panel.hidden=true; scrim.hidden=true; }
@@ -503,13 +522,13 @@ document.getElementById("submit").onclick=async()=>{
   if(!validate()) return;
   const v=id=>document.getElementById(id).value.trim();
   const items=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b).map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
-  const payload={name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
+  const payload={total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
   btn.disabled=true; btn.textContent="접수 중…";
   try{
     const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
     const j=await r.json();
     if(!j.ok) throw new Error(j.error||"fail");
-    toast.textContent=`접수됐어요. 접수번호 ${j.id} · 확정 안내를 받으면 24시간 이내에 카카오뱅크 3333-03-4776150으로 신청자 이름(${v("f-name")})으로 입금해 주세요 :)`;
+    const t=totals(); toast.textContent=`접수됐어요. 접수번호 ${j.id} · 최종 입금액 ${t.sum.toLocaleString("ko-KR")}원${t.unpriced?" (미정 "+t.unpriced+"종 별도)":""} · 확정 안내를 받으면 24시간 이내에 카카오뱅크 3333-03-4776150으로 신청자 이름(${v("f-name")})으로 입금해 주세요 :)`;
     btn.textContent="접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
   }catch(e){
     btn.disabled=false; btn.textContent="다시 신청하기";
