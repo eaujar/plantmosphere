@@ -54,6 +54,8 @@ h1 em{font-style:normal;color:var(--green-ink)}
 .tab[aria-selected="true"]{background:var(--ink);color:#fff}
 .filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:transparent;padding:4px 12px;border-radius:999px;cursor:pointer;font-size:12.5px;color:var(--ink-2)}
+.chip.latin{font-style:italic}
+.chip .n{font-style:normal;opacity:.6;font-size:11px}
 .chip[aria-pressed="true"]{border-color:var(--green-ink);color:var(--green-ink);background:#F2F8EA;font-weight:500}
 .search{display:flex;gap:8px;align-items:center}
 .search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 14px;border-radius:999px;font:inherit}
@@ -291,7 +293,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
       <button class="tab" role="tab" id="tab-sets" aria-selected="false">세트 구성</button>
     </div>
     <div id="filterWrap">
-      <div class="filters" id="filters" aria-label="산지로 거르기"></div>
+      <div class="filters" id="filters" aria-label="속명으로 거르기"></div>
     </div>
     <div class="search" id="searchWrap">
       <input id="q" type="search" placeholder="학명이나 속 이름으로 찾기 (예: Piper, blue)" aria-label="찾기">
@@ -443,13 +445,12 @@ function card(p){
 }
 
 /* 필터 */
-const ISLES = ["전체","Sumatra","Borneo","Papua","Sulawesi","Java","푸른 잎","동정 챌린지"];
+const GENERA = [...new Set(PLANTS.map(p=>p.genus))];
+const ISLES = ["전체", ...GENERA];
 let isle="전체", q="";
-document.getElementById("filters").innerHTML = ISLES.map(i=>`<button class="chip" aria-pressed="${i==="전체"}" data-isle="${i}">${i}</button>`).join("");
+document.getElementById("filters").innerHTML = ISLES.map(i=>{const n=i==="전체"?PLANTS.length:PLANTS.filter(p=>p.genus===i).length; const ko=/[가-힣]/.test(i); return `<button class="chip${ko||i==="전체"?"":" latin"}" aria-pressed="${i==="전체"}" data-isle="${esc(i)}">${esc(i)} <span class="n">${n}</span></button>`;}).join("");
 function match(p){
-  if(isle==="푸른 잎" && !p.blue) return false;
-  if(isle==="동정 챌린지" && !(p.genus==="미동정 양치"||p.genus==="미확인")) return false;
-  if(!["전체","푸른 잎","동정 챌린지"].includes(isle) && (!p.place || p.place.isl!==isle)) return false;
+  if(isle!=="전체" && p.genus!==isle) return false;
   if(q){ const s=(p.name+" "+p.genus+" "+(GENUS[p.genus]||[""])[0]).toLowerCase(); if(!s.includes(q)) return false; }
   return true;
 }
