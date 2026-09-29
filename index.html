@@ -169,6 +169,11 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 .total .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-weight:700;font-size:15px}
 .total .row b{font-size:20px;letter-spacing:-.01em}
 .total .sub{font-size:12.5px;color:var(--ink-2)}
+
+.dock-btns{display:flex;gap:8px;align-items:center}
+.linkbtn{background:transparent!important;color:var(--ink)!important;border:1px solid var(--ink)!important;font-weight:500!important}
+.editnote{margin:0;font-size:13px;line-height:1.6;background:#F2F8EA;border-radius:6px;padding:10px 12px;color:var(--ink)}
+@media (max-width:460px){.dock .in{flex-wrap:wrap}.dock-btns{width:100%;justify-content:flex-end}}
 </style>
 </head>
 <body>
@@ -210,6 +215,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 <ul>
 <li>신청은 공동구매 페이지의 <b>신청</b> 버튼으로 접수되며, 접수번호가 발급됩니다.</li>
 <li>신청은 수요 조사를 겸하며, 신청만으로 구매가 확정되지는 않습니다.</li>
+<li>확정 안내를 받기 전까지는 페이지 하단의 <b>신청 내용 수정</b>으로 신청 내용을 바꿀 수 있습니다. 처음 신청할 때와 같은 이름과 전화번호를 입력해야 하며, 이전 신청은 새 내용으로 대체됩니다. 확정 안내 이후의 변경은 문자로 문의해 주십시오.</li>
 <li>신청 접수 시각 순서대로 확정합니다. 종별 최소 수량에 미치지 못한 개체는 진행하지 않을 수 있습니다.</li>
 <li>확정되면 입력하신 전화번호(문자) 또는 이메일로 확정 개체와 금액을 안내드립니다.</li>
 </ul>
@@ -319,14 +325,15 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 <div class="dock" role="region" aria-label="담은 개체">
   <div class="in">
     <div class="sum" id="dockSum">아직 담은 개체가 없습니다</div>
-    <button id="openSheet" disabled>신청하기</button>
+    <div class="dock-btns"><button id="openEdit" class="linkbtn" hidden>신청 내용 수정</button><button id="openSheet" disabled>신청하기</button></div>
   </div>
 </div>
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="panel" id="panel" hidden aria-label="신청서">
-  <header><h2>공동구매 신청서</h2><button class="x" id="closeSheet" aria-label="닫기">×</button></header>
+  <header><h2 id="panelTitle">공동구매 신청서</h2><button class="x" id="closeSheet" aria-label="닫기">×</button></header>
   <div class="body">
+    <p class="editnote" id="editNote" hidden><b>신청 내용 수정</b><br>처음 신청할 때와 같은 <b>이름과 전화번호</b>를 입력해 주십시오. 이전 신청은 아래 내용으로 대체됩니다. 개체를 바꾸려면 창을 닫고 다시 담은 뒤 수정해 주십시오. 확정 안내를 받은 신청은 문자(010-8212-3543)로 문의해 주십시오.</p>
     <ul class="lines" id="lines"></ul>
     <div class="total" id="total" aria-live="polite"></div>
     <div class="form">
@@ -499,7 +506,26 @@ function renderSheet(){
   document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"미정"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없습니다.</p><div></div></li>`;
   renderTotal();
 }
-function openSheet(){ panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
+let editMode=false;
+function loadLast(){ try{ return JSON.parse(localStorage.getItem("pm-last")||"null"); }catch(e){ return null; } }
+function resetPanel(){
+  const btn=document.getElementById("submit");
+  btn.disabled=false; btn.textContent=editMode?"수정 신청":"신청";
+  document.getElementById("toast").textContent=""; document.getElementById("err").textContent="";
+  document.getElementById("editNote").hidden=!editMode;
+  document.getElementById("panelTitle").textContent=editMode?"신청 내용 수정":"공동구매 신청서";
+}
+function openSheet(){ editMode=false; resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
+function openEdit(){
+  editMode=true;
+  const last=loadLast();
+  if(last){
+    ["name","tel","email","addr"].forEach(k=>{ const el=document.getElementById("f-"+k); if(!el.value.trim()) el.value=last[k]||""; });
+    if(!Object.keys(cart).length && last.cart){ cart={...last.cart}; save(); renderEach(); renderSets(); renderDock(); }
+  }
+  resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus();
+}
+document.getElementById("openEdit").onclick=openEdit;
 function closeSheet(){ panel.hidden=true; scrim.hidden=true; }
 document.getElementById("openSheet").onclick=openSheet;
 document.getElementById("closeSheet").onclick=closeSheet;
@@ -519,23 +545,37 @@ function validate(){
 }
 document.getElementById("rulesBox").innerHTML=document.getElementById("rulesBody").innerHTML;
 document.getElementById("submit").onclick=async()=>{
-  const toast=document.getElementById("toast"), btn=document.getElementById("submit");
+  const toast=document.getElementById("toast"), btn=document.getElementById("submit"), err=document.getElementById("err");
   if(!validate()) return;
   const v=id=>document.getElementById(id).value.trim();
-  const items=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b).map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
-  const payload={total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
+  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
+  if(!nos.length){ err.textContent="담은 개체가 없습니다. 창을 닫고 개체를 담은 뒤 다시 시도해 주십시오."; return; }
+  const items=nos.map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
+  const payload={mode:editMode?"edit":"new",total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
+  const label=editMode?"수정 신청":"신청";
   btn.disabled=true; btn.textContent="접수 중…";
+  let j=null;
   try{
     const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-    const j=await r.json();
-    if(!j.ok) throw new Error(j.error||"fail");
-    const t=totals(); toast.textContent=`접수되었습니다. 접수번호 ${j.id} · 최종 입금액 ${t.sum.toLocaleString("ko-KR")}원${t.unpriced?" (미정 "+t.unpriced+"종 별도)":""} · 확정 안내를 받으면 24시간 이내에 카카오뱅크 3333-03-4776150으로 신청자 이름(${v("f-name")})으로 입금해 주십시오 :)`;
-    btn.textContent="접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
-  }catch(e){
-    btn.disabled=false; btn.textContent="다시 신청";
-    document.getElementById("err").textContent="접수가 되지 않았습니다. 잠시 뒤 다시 시도하거나 문자(010-8212-3543)로 문의해 주십시오.";
+    j=await r.json();
+  }catch(e){ j=null; }
+  if(!j||!j.ok){
+    btn.disabled=false; btn.textContent="다시 "+label;
+    const code=j&&j.error;
+    err.textContent = code==="not_found" ? "일치하는 신청을 찾지 못했습니다. 처음 신청할 때와 같은 이름과 전화번호를 입력해 주십시오."
+      : code==="locked" ? "이미 확정된 신청은 페이지에서 수정할 수 없습니다. 문자(010-8212-3543)로 문의해 주십시오."
+      : "접수가 되지 않았습니다. 잠시 뒤 다시 시도하거나 문자(010-8212-3543)로 문의해 주십시오.";
+    return;
   }
+  const t=totals();
+  try{ localStorage.setItem("pm-last", JSON.stringify({id:j.id,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),cart:{...cart}})); }catch(e){}
+  const head = editMode ? `수정되었습니다. 새 접수번호 ${j.id}${j.replaced&&j.replaced.length?` (이전 ${j.replaced.join(", ")}은 수정됨으로 처리)`:""}` : `접수되었습니다. 접수번호 ${j.id}`;
+  toast.textContent=`${head} · 최종 입금액 ${t.sum.toLocaleString("ko-KR")}원 · 확정 안내를 받으면 24시간 이내에 카카오뱅크 3333-03-4776150으로 신청자 이름(${v("f-name")})으로 입금해 주십시오 :)`;
+  btn.textContent=editMode?"수정 완료":"접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
 };
+
+/* 수정 기능은 시트 코드가 지원할 때만 표시 */
+fetch(ORDER_ENDPOINT).then(r=>r.json()).then(j=>{ if(j&&j.version>=2) document.getElementById("openEdit").hidden=false; }).catch(()=>{});
 
 /* 이벤트 */
 document.addEventListener("click",e=>{
