@@ -174,6 +174,25 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 .linkbtn{background:transparent!important;color:var(--ink)!important;border:1px solid var(--ink)!important;font-weight:500!important}
 .editnote{margin:0;font-size:13px;line-height:1.6;background:#F2F8EA;border-radius:6px;padding:10px 12px;color:var(--ink)}
 @media (max-width:460px){.dock .in{flex-wrap:wrap}.dock-btns{width:100%;justify-content:flex-end}}
+
+.wait{margin:0;font-size:13px;color:var(--ink-2);display:flex;gap:8px;align-items:center}
+.leaf{width:14px;height:14px;border-radius:0 100% 0 100%;background:var(--green);flex:0 0 auto}
+@media (prefers-reduced-motion:no-preference){.leaf{animation:sway 1.2s ease-in-out infinite alternate}@keyframes sway{from{transform:rotate(-25deg)}to{transform:rotate(25deg)}}}
+.done{position:fixed;inset:0;z-index:40;background:#fff;overflow:auto;padding:calc(40px + env(safe-area-inset-top,0px)) 16px calc(40px + env(safe-area-inset-bottom,0px))}
+.done-card{max-width:520px;margin:0 auto;display:grid;gap:18px;text-align:center}
+.done-logo{width:min(240px,60%);height:auto;margin:0 auto;display:block}
+.done-k{margin:12px 0 0;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--green-ink)}
+.done h2{margin:0;font-size:22px;line-height:1.45;letter-spacing:-.01em;text-wrap:balance}
+.done-info{margin:0;display:grid;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);text-align:left}
+.done-info div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:10px 4px;border-top:1px solid var(--line)}
+.done-info div:first-child{border-top:0}
+.done-info dt{font-size:12.5px;color:var(--ink-2)}
+.done-info dd{margin:0;font-weight:700}
+.done-note{margin:0;font-size:13.5px;color:var(--ink-2);text-align:left}
+.quote{margin:8px 0 0;padding:18px 16px;background:var(--soft);border-radius:10px}
+.quote .en{margin:0;font-style:italic;font-size:16px;line-height:1.5}
+.quote .ko{margin:6px 0 0;font-size:13px;color:var(--ink-2)}
+.quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--ink-2);letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -352,10 +371,28 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
     </div>
     <input type="text" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
     <button class="primary" id="submit">신청</button>
+    <p class="wait" id="wait" hidden aria-live="polite"><span class="leaf" aria-hidden="true"></span>접수 중입니다. 숲에서 답장이 오기까지 10~20초 정도 걸립니다. 창을 닫지 말아 주십시오.</p>
     <p class="toast" id="toast" aria-live="polite"></p>
     <p class="hint" id="dmHint">신청을 누르면 바로 접수됩니다. 확정되면 문자 또는 이메일로 안내드리겠습니다 :)</p>
   </div>
 </aside>
+
+<div class="done" id="done" hidden role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+  <div class="done-card">
+    <img class="done-logo" src="plantmosphere.png" alt="plantmosphere." width="1400" height="150">
+    <p class="done-k" id="doneKicker">신청 완료</p>
+    <h2 id="doneTitle">숲에서 온 식물이<br>당신의 비바리움으로 떠날 준비를 시작합니다.</h2>
+    <dl class="done-info">
+      <div><dt>접수번호</dt><dd class="mono" id="doneId"></dd></div>
+      <div><dt>최종 입금액</dt><dd class="mono" id="doneSum"></dd></div>
+      <div><dt>입금 계좌</dt><dd>카카오뱅크 <span class="mono">3333-03-4776150</span></dd></div>
+      <div><dt>입금자명</dt><dd id="doneName"></dd></div>
+    </dl>
+    <p class="done-note">확정 안내를 문자 또는 이메일로 받으시면 <b>24시간 이내</b>에 <b>신청자와 같은 이름으로</b> 입금해 주십시오. 문의는 문자 010-8212-3543으로 보내 주십시오.</p>
+    <blockquote class="quote" id="doneQuote"></blockquote>
+    <button class="primary" id="goHome">메인으로 돌아가기</button>
+  </div>
+</div>
 
 <script>
 /* 신청 접수 주소: Apps Script 웹 앱 URL */
@@ -553,12 +590,13 @@ document.getElementById("submit").onclick=async()=>{
   const items=nos.map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
   const payload={mode:editMode?"edit":"new",total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
   const label=editMode?"수정 신청":"신청";
-  btn.disabled=true; btn.textContent="접수 중…";
+  btn.disabled=true; btn.textContent="접수 중…"; document.getElementById("wait").hidden=false;
   let j=null;
   try{
     const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
     j=await r.json();
   }catch(e){ j=null; }
+  document.getElementById("wait").hidden=true;
   if(!j||!j.ok){
     btn.disabled=false; btn.textContent="다시 "+label;
     const code=j&&j.error;
@@ -569,9 +607,32 @@ document.getElementById("submit").onclick=async()=>{
   }
   const t=totals();
   try{ localStorage.setItem("pm-last", JSON.stringify({id:j.id,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),cart:{...cart}})); }catch(e){}
-  const head = editMode ? `수정되었습니다. 새 접수번호 ${j.id}${j.replaced&&j.replaced.length?` (이전 ${j.replaced.join(", ")}은 수정됨으로 처리)`:""}` : `접수되었습니다. 접수번호 ${j.id}`;
-  toast.textContent=`${head} · 최종 입금액 ${t.sum.toLocaleString("ko-KR")}원 · 확정 안내를 받으면 24시간 이내에 카카오뱅크 3333-03-4776150으로 신청자 이름(${v("f-name")})으로 입금해 주십시오 :)`;
-  btn.textContent=editMode?"수정 완료":"접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
+  btn.textContent=editMode?"수정 완료":"접수 완료";
+  showDone({id:j.id, sum:t.sum, name:v("f-name"), edit:editMode, replaced:j.replaced||[]});
+  cart={}; save(); renderEach(); renderSets(); renderDock();
+};
+
+/* 완료 화면 */
+const QUOTES=[
+  {en:"Adopt the pace of nature: her secret is patience.", ko:"자연의 속도를 따르십시오. 그 비밀은 인내입니다.", by:"Ralph Waldo Emerson"},
+  {en:"In every walk with nature one receives far more than he seeks.", ko:"자연 속을 걸을 때마다, 우리는 구한 것보다 훨씬 많은 것을 얻습니다.", by:"John Muir"}
+];
+function showDone(o){
+  document.getElementById("doneKicker").textContent = o.edit ? "수정 완료" + (o.replaced.length ? " · 이전 " + o.replaced.join(", ") + " 대체" : "") : "신청 완료";
+  document.getElementById("doneId").textContent = o.id;
+  document.getElementById("doneSum").textContent = o.sum.toLocaleString("ko-KR") + "원";
+  document.getElementById("doneName").textContent = o.name;
+  const q = QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  document.getElementById("doneQuote").innerHTML = `<p class="en">“${esc(q.en)}”</p><p class="ko">${esc(q.ko)}</p><cite>— ${esc(q.by)}</cite>`;
+  panel.hidden=true; scrim.hidden=true;
+  const d=document.getElementById("done"); d.hidden=false; d.scrollTop=0;
+  document.getElementById("goHome").focus();
+}
+document.getElementById("goHome").onclick=()=>{
+  document.getElementById("done").hidden=true;
+  ["f-agree","f-privacy"].forEach(id=>document.getElementById(id).checked=false);
+  editMode=false; resetPanel();
+  window.scrollTo({top:0, behavior:"smooth"});
 };
 
 /* 수정 기능은 시트 코드가 지원할 때만 표시 */
