@@ -28,7 +28,7 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
 /* masthead */
-header.mast{padding-block:56px 36px;display:grid;gap:28px;border-bottom:1px solid var(--ink)}
+header.mast{padding-block:40px 36px;display:grid;gap:28px;border-bottom:1px solid var(--ink)}
 .logo{display:block;width:min(280px,52%);height:auto}
 .mast-row{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
 h1{font-weight:700;font-size:22.5px;line-height:1.35;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
@@ -193,13 +193,23 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 .quote .en{margin:0;font-style:italic;font-size:16px;line-height:1.5}
 .quote .ko{margin:6px 0 0;font-size:13px;color:var(--ink-2)}
 .quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+
+.topbar{background:#111;color:#fff;margin-inline:-16px;padding-inline:16px}
+.topbar-in{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-block:22px 16px;flex-wrap:wrap}
+.topbar-logo{width:min(280px,58%);height:auto;display:block}
+.slogan{font-size:12.5px;letter-spacing:.08em;color:#fff;opacity:.85;white-space:nowrap}
 </style>
 </head>
 <body>
 
+<div class="topbar">
+  <div class="topbar-in">
+    <img class="topbar-logo" src="plantmosphere-white.png" alt="plantmosphere." width="1400" height="150">
+    <span class="slogan">Greeeeen Curationsssss</span>
+  </div>
+</div>
 <div class="wrap">
   <header class="mast">
-    <img class="logo" src="plantmosphere.png" alt="plantmosphere." width="1400" height="150">
     <div class="mast-row">
       <div>
         <h1>인도네시아 숲에서 온<br><em>55종</em>의 식물, 10월 공동구매</h1>
