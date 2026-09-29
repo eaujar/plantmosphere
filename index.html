@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>plantmosphere. 9월 공동구매</title>
+<meta name="description" content="plantmosphere. 9월 공동구매 — 인도네시아 숲 식물 55종">
+<link rel="icon" href="eaujar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#FFFFFF; --sheet:#FFFFFF; --ink:#111111; --ink-2:#6B6B6B; --line:#E4E4E4; --soft:#F5F5F4;
+  --green:#8CC63F; --green-ink:#4E7A1A; --blue:#3FA9D6; --blue-soft:#EAF6FB;
+  --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;padding-inline:16px;padding-block:0 120px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto}
+.bin{font-style:italic;font-weight:500;letter-spacing:-.005em}
+.mono{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* masthead */
+header.mast{padding-block:56px 36px;display:grid;gap:28px;border-bottom:1px solid var(--ink)}
+.logo{display:block;width:min(420px,78%);height:auto}
+.mast-row{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+h1{font-weight:700;font-size:clamp(26px,4.2vw,40px);line-height:1.2;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--green-ink)}
+.lede{max-width:60ch;color:var(--ink-2);margin:0}
+.lot{font-size:12px;line-height:1.9;text-align:right;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
+.lot b{color:var(--ink);font-weight:700}
+@media (max-width:720px){.mast-row{grid-template-columns:1fr}.lot{text-align:left}}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin:28px 0 12px}
+.steps div{border-top:2px solid var(--ink);padding-top:10px}
+.steps .k{font-size:11px;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase;font-weight:700}
+.steps p{margin:2px 0 0;font-size:13.5px;color:var(--ink-2)}
+.steps strong{display:block;color:var(--ink);font-weight:700;font-size:15px;margin-top:2px}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:460px){.steps{grid-template-columns:1fr}}
+
+/* tabs + filters */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);padding-block:14px 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{border:1px solid var(--ink);background:transparent;padding:7px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:transparent;padding:4px 12px;border-radius:999px;cursor:pointer;font-size:12.5px;color:var(--ink-2)}
+.chip[aria-pressed="true"]{border-color:var(--green-ink);color:var(--green-ink);background:#F2F8EA;font-weight:500}
+.search{display:flex;gap:8px;align-items:center}
+.search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 14px;border-radius:999px;font:inherit}
+.count{font-size:12px;color:var(--ink-2);white-space:nowrap}
+
+/* genus sections */
+.genus{margin-top:40px}
+.genus-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:8px;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.genus-h h2{font-style:italic;font-weight:700;font-size:24px;margin:0;line-height:1.1;letter-spacing:-.01em}
+.genus-h h2.ko{font-style:normal}
+.genus-h .gn{font-size:13px;color:var(--ink-2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px 20px}
+
+/* specimen card */
+.spec{display:flex;flex-direction:column}
+.spec .ph{aspect-ratio:3/4;max-width:100%;background:var(--soft);position:relative;overflow:hidden;border-radius:6px}
+.spec .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.spec .ph .none{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:var(--ink-2);font-size:13px}
+.spec .no{position:absolute;top:10px;left:10px;background:#fff;color:var(--ink);font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+.spec .loc{position:absolute;bottom:10px;left:10px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(17,17,17,.72);padding:3px 8px;border-radius:999px}
+.spec.in .ph{outline:2px solid var(--green);outline-offset:-2px}
+.lab{padding:12px 2px 0;display:flex;flex-direction:column;gap:8px;flex:1}
+.lab .bin{font-size:17px;line-height:1.25}
+.lab .ind{font-size:11.5px;color:var(--ink-2)}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:11.5px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2)}
+.tag.blue{color:#1F7FA8;border-color:#BFE3F2;background:var(--blue-soft)}
+.note{font-size:13px;color:var(--ink-2);margin:0}
+.buy{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
+.price{font-size:12.5px;color:var(--ink-2)}
+.price b{color:var(--ink);font-weight:700;font-size:14px}
+.stepper{display:flex;align-items:center;border:1px solid var(--ink);border-radius:999px;overflow:hidden}
+.stepper button{width:32px;height:30px;border:0;background:transparent;cursor:pointer;font-size:16px}
+.stepper span{min-width:22px;text-align:center;font-weight:700}
+.add{border:1px solid var(--ink);background:transparent;color:var(--ink);padding:5px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:500}
+.add:hover{background:var(--ink);color:#fff}
+
+/* sets */
+.sets{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-top:28px}
+.set{border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.set .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-ink);font-weight:700}
+.set h3{font-size:20px;margin:0;font-weight:700;letter-spacing:-.01em}
+.set p{margin:0;color:var(--ink-2);font-size:14px}
+.set .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.set .thumbs figure{margin:0}
+.set .thumbs img,.set .thumbs .blank{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:var(--soft);border-radius:4px}
+.set .thumbs figcaption{font-style:italic;font-size:11.5px;line-height:1.2;margin-top:4px;color:var(--ink-2)}
+.set .row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:auto}
+
+/* dock + sheet */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(255,255,255,.96);border-top:1px solid var(--ink);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+.dock .in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dock .sum{font-size:14px;font-weight:500}
+.dock .sum .mono{color:var(--ink-2);font-weight:400;font-size:12.5px}
+.dock button{background:var(--ink);color:#fff;border:0;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer}
+.dock button:disabled{opacity:.3;cursor:default}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20}
+.panel{position:fixed;z-index:21;top:0;right:0;bottom:0;width:min(480px,100%);background:#fff;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.panel header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.panel header h2{margin:0;font-size:18px}
+.x{border:0;background:transparent;font-size:22px;cursor:pointer;width:36px;height:36px}
+.panel .body{overflow:auto;padding:16px 18px 24px;display:flex;flex-direction:column;gap:18px}
+.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.lines li{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.lines img,.lines .blank{width:46px;height:58px;object-fit:cover;background:var(--soft);display:block;border-radius:4px}
+.lines .bin{font-size:15px;line-height:1.2}
+.lines .mono{font-size:11px;color:var(--ink-2)}
+.form{display:grid;gap:12px}
+.form label{display:grid;gap:4px;font-size:13px;color:var(--ink-2)}
+.form input,.form select,.form textarea{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:6px;padding:9px 11px;width:100%}
+.form textarea{min-height:70px;resize:vertical}
+.out{font-size:12.5px;white-space:pre-wrap;background:var(--soft);padding:12px;border-radius:6px;max-height:260px;overflow:auto}
+.primary{background:var(--ink);color:#fff;border:0;padding:12px 16px;border-radius:999px;font-weight:700;cursor:pointer;width:100%}
+.hint{font-size:13px;color:var(--ink-2);margin:0}
+.toast{font-size:13px;color:var(--green-ink);min-height:1.2em}
+.err{font-size:13px;color:#C0392B;min-height:1.2em}
+
+/* footer */
+footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:grid;gap:24px}
+.fnotes{display:grid;gap:6px;font-size:13px;color:var(--ink-2);max-width:70ch}
+.sign{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:12px}
+.sign img{width:120px;height:auto;display:block}
+.sign small{font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+
+.agree{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--ink-2)}
+.agree input{margin-top:4px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.primary.ghost{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+.primary:disabled{opacity:.5;cursor:default}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="mast">
+    <img class="logo" src="plantmosphere.png" alt="plantmosphere." width="1400" height="150">
+    <div class="mast-row">
+      <div>
+        <h1>숲에서 온 <em>55종</em>의 기록, 9월 공동구매</h1>
+        <p class="lede">인도네시아 수마트라·보르네오·파푸아·술라웨시의 숲 바닥과 바위, 나무껍질에서 자라던 식물들입니다. 이름을 보고 고르기보다, 어디서 어떻게 살던 식물인지 보고 골라 주세요. 내 비바리움의 어느 자리에 놓일지 떠올리면서요…</p>
+      </div>
+      <div class="lot">Lot <b>2026-09</b><br>Species <b>55</b><br>Origin <b>Indonesia</b></div>
+    </div>
+  </header>
+
+  <section class="steps" aria-label="공동구매 진행 순서">
+    <div><span class="k">Step 1</span><strong>둘러보고 담기</strong><p>개체 카드나 서식지 세트를 담아요.</p></div>
+    <div><span class="k">Step 2</span><strong>신청서 만들기</strong><p>아래 바에서 신청서를 열고 연락처를 적어요.</p></div>
+    <div><span class="k">Step 3</span><strong>DM으로 보내기</strong><p>만들어진 신청서를 복사해 인스타그램 DM으로 보내요.</p></div>
+    <div><span class="k">Step 4</span><strong>입고식에서 받기</strong><p>순화를 마친 개체를 산지 태그와 함께 전해 드려요.</p></div>
+  </section>
+
+  <div class="bar">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-each" aria-selected="true">개체별로 보기</button>
+      <button class="tab" role="tab" id="tab-sets" aria-selected="false">서식지 세트</button>
+    </div>
+    <div id="filterWrap">
+      <div class="filters" id="filters" aria-label="산지로 거르기"></div>
+    </div>
+    <div class="search" id="searchWrap">
+      <input id="q" type="search" placeholder="학명이나 속 이름으로 찾기 (예: Piper, blue)" aria-label="찾기">
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <main id="each"></main>
+  <main id="sets" hidden></main>
+
+  <footer>
+    <div class="fnotes">
+      <div>가격은 수입·검역 비용이 확정되면 공지합니다. 신청은 확정 전 수요 조사를 겸하며, 최소 수량에 못 미친 개체는 입고하지 않을 수 있어요.</div>
+      <div>같은 이름의 개체가 여러 장인 경우(개체 A·B·C) 사진 속 개체가 서로 달라요. 원하는 개체를 골라 담아 주세요.</div>
+    </div>
+    <div class="sign">
+      <img src="eaujar.png" alt="eaujar" width="565" height="300">
+      <small>© 2026 copyrights reserved by eaujar</small>
+    </div>
+  </footer>
+</div>
+
+<div class="dock" role="region" aria-label="담은 개체">
+  <div class="in">
+    <div class="sum" id="dockSum">아직 담은 개체가 없어요</div>
+    <button id="openSheet" disabled>신청서 만들기</button>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="panel" id="panel" hidden aria-label="신청서">
+  <header><h2>공동구매 신청서</h2><button class="x" id="closeSheet" aria-label="닫기">×</button></header>
+  <div class="body">
+    <ul class="lines" id="lines"></ul>
+    <div class="form">
+      <label>이름 또는 닉네임<input id="f-name" autocomplete="name"></label>
+      <label>인스타그램 아이디<input id="f-ig" placeholder="@"></label>
+      <label>연락처 (선택)<input id="f-tel" inputmode="tel"></label>
+      <label>수령 방법
+        <select id="f-pick">
+          <option>입고식 현장 수령</option>
+          <option>THE BOTANICAL 마켓에서 수령</option>
+          <option>택배 (고습 포장, 날씨에 따라 발송일 조정)</option>
+        </select>
+      </label>
+      <label>메모 (선택)<textarea id="f-memo" placeholder="비바리움 크기, 대체 개체 허용 여부 등"></textarea></label>
+    </div>
+    <p class="err" id="err"></p>
+    <label class="agree"><input type="checkbox" id="f-agree"> 공동구매 진행 연락을 위한 개인정보(이름, 인스타그램, 연락처) 수집에 동의해요.</label>
+    <input type="text" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+    <button class="primary" id="submit" hidden>신청하기</button>
+    <div class="out" id="out" tabindex="0" aria-label="신청서 내용"></div>
+    <button class="primary ghost" id="copy">신청서 복사하기</button>
+    <p class="toast" id="toast" aria-live="polite"></p>
+    <p class="hint" id="dmHint">복사한 신청서를 인스타그램 <b class="mono">@eau.jar</b> DM으로 보내 주세요. 확인 후 순서대로 답장드려요 :)</p>
+  </div>
+</aside>
+
+<script>
+/* 신청 접수 주소: Apps Script 웹 앱 URL을 넣으면 "신청하기"로 바로 접수돼요. 비워 두면 복사→DM 방식으로 동작해요. */
+const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbzq5z-Br6cjBUzGommRCevPvYrwSFBijHfHMKnoKLCT8dcegSuZgVYtcBO4aFAMUOIS/exec";
+
+/* 가격이 정해지면 번호: 원화 가격을 적어 넣으세요. 예) 1: 18000 */
+const PRICE_KRW = {};
+
+const PLANTS = [{"no":1,"genus":"Amorphophallus","name":"Amorphophallus pendulus","img":"img/01.jpg"},{"no":2,"genus":"Ardisia","name":"Ardisia sp","img":"img/02.jpg"},{"no":3,"genus":"Ardisia","name":"Ardisia sp blue","img":"img/03.jpg"},{"no":4,"genus":"Begonia","name":"Begonia new species from langkat sumatra","img":"img/04.jpg"},{"no":5,"genus":"Codonoboea","name":"Codonobae Dendata","img":null},{"no":6,"genus":"Codonoboea","name":"Codonoboea","img":"img/06.jpg"},{"no":7,"genus":"Codonoboea","name":"Codonoboea sp","img":"img/07.jpg"},{"no":9,"genus":"Davallia","name":"Davalia sp","img":"img/09.jpg"},{"no":10,"genus":"Dendroconche","name":"Dendroconche annabelle/microsorum","img":"img/10.jpg"},{"no":11,"genus":"Dioscorea","name":"Discorea sp","img":"img/11.jpg"},{"no":12,"genus":"Diplazium","name":"Diplazium sp","img":"img/12.jpg"},{"no":13,"genus":"Diplazium","name":"Diplazium sp","img":"img/13.jpg"},{"no":14,"genus":"Diplazium","name":"Diplazium sp","img":"img/14.jpg"},{"no":15,"genus":"Elatostema","name":"Elatostemma new sp papua","img":"img/15.jpg"},{"no":16,"genus":"Ficus","name":"Ficus sp","img":"img/16.jpg"},{"no":17,"genus":"Ficus","name":"Picus sp sumatra","img":"img/17.jpg"},{"no":18,"genus":"Freycinetia","name":"Freycinetia sp","img":null},{"no":19,"genus":"Homalomena","name":"Homalomena aaf hasei","img":"img/19.jpg"},{"no":20,"genus":"Homalomena","name":"Homalomena dolpin green","img":null},{"no":21,"genus":"Homalomena","name":"Homalomena hasei","img":"img/21.jpg"},{"no":22,"genus":"Homalomena","name":"Homalomena mini dolpin silver","img":"img/22.jpg"},{"no":23,"genus":"Homalomena","name":"Homalomena rugosum","img":"img/23.jpg"},{"no":24,"genus":"Homalomena","name":"Homalomena sp hairy","img":"img/24.jpg"},{"no":25,"genus":"Homalomena","name":"Homalomena sp sumatra","img":"img/25.jpg"},{"no":26,"genus":"Homalomena","name":"Homalomena sp sumatra","img":"img/26.jpg"},{"no":27,"genus":"Hymenophyllum","name":"Hymenophyllum","img":"img/27.jpg"},{"no":28,"genus":"Lindsaea","name":"Lindsaea sp blue","img":"img/28.jpg"},{"no":29,"genus":"Lindsaea","name":"Lindsaea sp sumatra","img":"img/29.jpg"},{"no":31,"genus":"Mapania","name":"Mapania sp","img":"img/31.jpg"},{"no":32,"genus":"Mapania","name":"Mapania sp papua","img":"img/32.jpg"},{"no":33,"genus":"Microsorum","name":"Microsorum sp","img":"img/33.jpg"},{"no":34,"genus":"Microsorum","name":"Microsorum sp blue","img":"img/34.jpg"},{"no":36,"genus":"Pinanga","name":"Pinanga disticha","img":"img/36.jpg"},{"no":37,"genus":"Piper","name":"Piper sp","img":"img/37.jpg"},{"no":38,"genus":"Piper","name":"Piper sp borneo","img":"img/38.jpg"},{"no":39,"genus":"Piper","name":"Piper sp papua","img":"img/39.jpg"},{"no":40,"genus":"Piper","name":"Piper sp Sulawesi","img":"img/40.jpg"},{"no":41,"genus":"Piper","name":"Piper sp sumatra","img":"img/41.jpg"},{"no":42,"genus":"Piper","name":"Piper sp timika","img":"img/42.jpg"},{"no":43,"genus":"Sarcopyramis","name":"Sarcopyramis green sp","img":"img/43.jpg"},{"no":44,"genus":"Sarcopyramis","name":"Sarcopyramis sp aceh","img":"img/44.jpg"},{"no":45,"genus":"Sarcopyramis","name":"Sarcopyramis sp blue","img":"img/45.jpg"},{"no":46,"genus":"Sarcopyramis","name":"Sarcopyramis sp kalimantan","img":"img/46.jpg"},{"no":47,"genus":"Selaginella","name":"Selaginella sp","img":"img/47.jpg"},{"no":48,"genus":"Selaginella","name":"Selaginella sp jambi","img":"img/48.jpg"},{"no":49,"genus":"Selliguea","name":"Selliguea sp sumatra","img":"img/49.jpg"},{"no":50,"genus":"Sonerila","name":"Sonerila sp borneo","img":"img/50.jpg"},{"no":51,"genus":"Sonerila","name":"Sonerila sp dragon","img":"img/51.jpg"},{"no":52,"genus":"Sonerila","name":"Sonerila sp java","img":"img/52.jpg"},{"no":53,"genus":"Teratophyllum","name":"Teratophylum sp","img":"img/53.jpg"},{"no":54,"genus":"Teratophyllum","name":"Teratophylum sp borneo","img":"img/54.jpg"},{"no":55,"genus":"미동정 양치","name":"Fern","img":"img/55.jpg"},{"no":56,"genus":"미동정 양치","name":"Fern sp","img":"img/56.jpg"},{"no":57,"genus":"미동정 양치","name":"Fern sp sumatra","img":"img/57.jpg"},{"no":58,"genus":"미확인","name":"Plant no id","img":"img/58.jpg"}];
+
+/* 속별 비바리움 메모: [한국어 이름, 자리 태그, 한 줄 메모] */
+const GENUS = {
+  "Amorphophallus":["곤약속","바닥","덩이줄기로 자라며 휴면기가 있어요. 배수가 잘 되는 용토에 심어 주세요."],
+  "Ardisia":["자금우속","바닥·중경","천천히 자라는 소형 관목. 높은 습도와 은은한 빛을 좋아해요."],
+  "Begonia":["베고니아속","바닥","고습 테라리움 향 베고니아. 잎에 물이 고이지 않게 통풍을 챙겨 주세요."],
+  "Codonoboea":["코도노보에아속","바닥·바위","게스네리아과. 이끼 낀 바위틈처럼 습하고 어두운 자리에서 잘 커요."],
+  "Davallia":["넉줄고사리속","벽면·유목","뿌리줄기가 표면을 기어가는 착생 양치. 유목이나 코르크에 올려 주세요."],
+  "Dendroconche":["덴드로콘케속","벽면·유목","잎이 비늘처럼 겹쳐 붙는 착생 양치예요."],
+  "Dioscorea":["마속","덩굴","잎맥 무늬가 선명한 덩굴. 타고 오를 구조물을 마련해 주세요."],
+  "Diplazium":["섬고사리속","바닥","숲 바닥 양치. 습한 뒷배경을 풍성하게 채워 줘요."],
+  "Elatostema":["물통이과 엘라토스테마속","바닥·수변","아주 높은 습도와 낮은 빛을 좋아하는 숲 바닥 식물이에요."],
+  "Ficus":["무화과나무속","벽면","벽을 타고 붙어 자라는 소형 덩굴 피쿠스예요."],
+  "Freycinetia":["프레이시네티아속","벽면·덩굴","판다누스과 덩굴. 기근으로 벽과 유목을 타고 올라요."],
+  "Homalomena":["호말로메나속","바닥·중경","천남성과. 잎 질감과 광택이 다양하고 고습에서 잘 커요."],
+  "Hymenophyllum":["처녀이끼속","벽면·수변","잎이 한 겹 세포로 된 필미 펀. 최고 습도와 통풍, 낮은 빛이 필요한 상급 개체예요."],
+  "Lindsaea":["고사리아재비속","바닥","빛 각도에 따라 푸른 광택이 도는 양치예요."],
+  "Mapania":["마파니아속","바닥·수변","사초과. 수변이나 앞쪽 바닥에 세로 선을 만들어 줘요."],
+  "Microsorum":["미크로소룸속","벽면·유목","착생 양치. 벽면이나 유목에 붙여 키우기 좋아요."],
+  "Pinanga":["피낭가속","중경","얼룩무늬 잎의 소형 야자 실생. 천천히 키워 보는 재미가 있어요."],
+  "Piper":["후추속","벽면·바닥","기어가며 자라는 후추 덩굴. 산지마다 잎 무늬와 색이 달라요."],
+  "Sarcopyramis":["사르코피라미스속","바닥","멜라스토마과 소형종. 고습 바닥에 보석처럼 박혀요."],
+  "Selaginella":["부처손속","바닥","바닥을 덮어 주는 바위손 무리. 이끼와 잘 어울려요."],
+  "Selliguea":["셀리구에아속","벽면·유목","착생 양치. 바위나 벽면에 붙여 키워요."],
+  "Sonerila":["소네릴라속","바닥","멜라스토마과. 은빛 점무늬 잎이 매력인 고습·저광 식물이에요."],
+  "Teratophyllum":["테라토필룸속","벽면","나무를 타고 오르는 양치. 어린 잎에 푸른 빛이 돌기도 해요."],
+  "미동정 양치":["아직 이름을 모르는 양치","동정 챌린지","키우며 포자와 잎 모양으로 함께 이름을 찾아가요."],
+  "미확인":["정체불명","동정 챌린지","꽃이 피거나 자라면서 정체가 드러나는 개체예요. 기록을 공유해 주세요."]
+};
+
+/* 산지 추출 */
+const PLACES = [
+  ["aceh","Sumatra","Aceh"],["jambi","Sumatra","Jambi"],["langkat","Sumatra","Langkat"],["sumatra","Sumatra",""],
+  ["kalimantan","Borneo","Kalimantan"],["borneo","Borneo",""],
+  ["timika","Papua","Timika"],["papua","Papua",""],["sulawesi","Sulawesi",""],["java","Java",""]
+];
+function place(name){
+  const n=name.toLowerCase();
+  for(const [k,isl,sub] of PLACES){ if(n.includes(k)) return {isl, sub}; }
+  return null;
+}
+
+/* 같은 이름 개체 A/B/C */
+const seen={};
+PLANTS.forEach(p=>{ const k=p.name.toLowerCase(); (seen[k]=seen[k]||[]).push(p); });
+Object.values(seen).forEach(arr=>{ if(arr.length>1) arr.forEach((p,i)=>p.ind="개체 "+String.fromCharCode(65+i)); });
+PLANTS.forEach(p=>{ p.place=place(p.name); p.blue=/blue/i.test(p.name); });
+const byNo = Object.fromEntries(PLANTS.map(p=>[p.no,p]));
+
+const SETS = [
+  {id:"blue",k:"Iridescent",title:"푸른 잎 컬렉션",text:"빛 각도에 따라 청록으로 반짝이는 잎만 모았어요. 어두운 비바리움에서 가장 먼저 눈에 들어오는 조합입니다.",items:[3,28,34,45]},
+  {id:"sumatra",k:"Sumatra · forest floor",title:"수마트라 숲 바닥",text:"아체와 잠비의 습한 숲 바닥을 옮겨 온 구성. 부처손으로 바닥을 덮고 사이사이 작은 잎들을 심어 보세요.",items:[44,48,29,25]},
+  {id:"borneo",k:"Borneo · wall & floor",title:"보르네오 벽면과 바닥",text:"벽을 타는 양치와 후추 덩굴, 바닥의 멜라스토마. 세로 공간이 있는 비바리움에 어울려요.",items:[54,38,50,46]},
+  {id:"papua",k:"Papua · low light",title:"파푸아 저광량",text:"빛이 적게 드는 파푸아 숲 아래층 식물들. 조명이 약한 자리나 뒤쪽 배경을 채우기 좋아요.",items:[39,42,32,15]},
+  {id:"mystery",k:"Unidentified",title:"동정 챌린지",text:"이름을 모르는 채로 들여와 키우며 함께 알아가는 세트. 자라는 모습을 공유해 주시면 plantmosphere. 기록으로 남겨요.",items:[58,55,56,57]}
+];
+
+/* 장바구니 */
+let cart = {};
+try{ cart = JSON.parse(localStorage.getItem("pm-cart")||"{}")||{}; }catch(e){ cart={}; }
+function save(){ try{ localStorage.setItem("pm-cart", JSON.stringify(cart)); }catch(e){} }
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const priceText = no => PRICE_KRW[no] ? "<b>"+PRICE_KRW[no].toLocaleString("ko-KR")+"원</b>" : "가격 공지 전";
+
+function imgTag(p, cls){
+  return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : `<div class="${cls||"blank"}"></div>`;
+}
+function buyHtml(p){
+  const q = cart[p.no]||0;
+  return q ? `<div class="stepper" aria-label="수량"><button data-dec="${p.no}" aria-label="하나 빼기">−</button><span>${q}</span><button data-inc="${p.no}" aria-label="하나 더">+</button></div>`
+           : `<button class="add" data-inc="${p.no}">담기</button>`;
+}
+function card(p){
+  const g = GENUS[p.genus]||["","",""];
+  const loc = p.place ? `<span class="loc">${esc(p.place.isl)}${p.place.sub?" · "+esc(p.place.sub):""}</span>` : "";
+  const tags = g[1].split("·").map(t=>`<span class="tag">${esc(t.trim())}</span>`).join("") + (p.blue?`<span class="tag blue">푸른 광택</span>`:"");
+  return `<article class="spec${cart[p.no]?" in":""}" data-no="${p.no}">
+    <div class="ph">${p.img?imgTag(p):`<div class="none">사진 준비 중<br>입고 후 실물 사진으로 올려요</div>`}<span class="no mono">No.${String(p.no).padStart(2,"0")}</span>${loc}</div>
+    <div class="lab">
+      <div><div class="bin">${esc(p.name)}</div>${p.ind?`<div class="ind">${p.ind}</div>`:""}</div>
+      <div class="tags">${tags}</div>
+      <p class="note">${esc(g[2])}</p>
+      <div class="buy"><span class="price">${priceText(p.no)}</span><span class="b">${buyHtml(p)}</span></div>
+    </div></article>`;
+}
+
+/* 필터 */
+const ISLES = ["전체","Sumatra","Borneo","Papua","Sulawesi","Java","푸른 잎","동정 챌린지"];
+let isle="전체", q="";
+document.getElementById("filters").innerHTML = ISLES.map(i=>`<button class="chip" aria-pressed="${i==="전체"}" data-isle="${i}">${i}</button>`).join("");
+function match(p){
+  if(isle==="푸른 잎" && !p.blue) return false;
+  if(isle==="동정 챌린지" && !(p.genus==="미동정 양치"||p.genus==="미확인")) return false;
+  if(!["전체","푸른 잎","동정 챌린지"].includes(isle) && (!p.place || p.place.isl!==isle)) return false;
+  if(q){ const s=(p.name+" "+p.genus+" "+(GENUS[p.genus]||[""])[0]).toLowerCase(); if(!s.includes(q)) return false; }
+  return true;
+}
+function renderEach(){
+  const list = PLANTS.filter(match);
+  const groups = [];
+  list.forEach(p=>{ let g=groups.find(x=>x.genus===p.genus); if(!g){g={genus:p.genus,items:[]};groups.push(g);} g.items.push(p); });
+  document.getElementById("count").textContent = list.length+" / "+PLANTS.length+"종";
+  document.getElementById("each").innerHTML = groups.length ? groups.map(g=>{
+    const info=GENUS[g.genus]||[""]; const ko=/[가-힣]/.test(g.genus);
+    return `<section class="genus"><div class="genus-h"><h2 class="${ko?"ko":""}">${esc(g.genus)}</h2><span class="gn">${ko?"":esc(info[0])+" · "}${g.items.length}개체</span></div><div class="grid">${g.items.map(card).join("")}</div></section>`;
+  }).join("") : `<p class="hint" style="margin-top:28px">조건에 맞는 개체가 없어요. 산지나 검색어를 바꿔 보세요.</p>`;
+}
+function renderSets(){
+  document.getElementById("sets").innerHTML = `<div class="sets">${SETS.map(s=>{
+    const ps=s.items.map(n=>byNo[n]); const all=ps.every(p=>cart[p.no]);
+    return `<article class="set"><span class="k">${esc(s.k)}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>
+      <div class="thumbs">${ps.map(p=>`<figure>${imgTag(p)}<figcaption>${esc(p.name)}</figcaption></figure>`).join("")}</div>
+      <div class="row"><span class="price mono">No.${ps.map(p=>String(p.no).padStart(2,"0")).join(" · ")}</span><button class="add" data-set="${s.id}">${all?"세트 모두 담김":"세트로 담기"}</button></div></article>`;
+  }).join("")}</div>`;
+}
+function renderDock(){
+  const nos=Object.keys(cart).filter(k=>cart[k]>0); const total=nos.reduce((a,k)=>a+cart[k],0);
+  const priced=nos.every(k=>PRICE_KRW[k]); const sum=nos.reduce((a,k)=>a+(PRICE_KRW[k]||0)*cart[k],0);
+  document.getElementById("dockSum").innerHTML = total ? `${nos.length}종 ${total}개체 담음 <span class="mono">${priced&&sum?"· "+sum.toLocaleString("ko-KR")+"원":"· 가격 공지 전"}</span>` : "아직 담은 개체가 없어요";
+  document.getElementById("openSheet").disabled = !total;
+}
+function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden) renderSheet(); }
+
+/* 신청서 */
+const panel=document.getElementById("panel"), scrim=document.getElementById("scrim");
+function orderText(){
+  const v=id=>document.getElementById(id).value.trim();
+  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
+  const lines=nos.map(n=>{const p=byNo[n]; return `No.${String(n).padStart(2,"0")} ${p.name}${p.ind?" ("+p.ind+")":""} × ${cart[n]}`;});
+  return `[plantmosphere. 9월 공동구매 신청]\n이름: ${v("f-name")}\n인스타그램: ${v("f-ig")}\n연락처: ${v("f-tel")||"-"}\n수령: ${v("f-pick")}\n\n${lines.join("\n")}\n\n총 ${nos.length}종 ${nos.reduce((a,n)=>a+cart[n],0)}개체${v("f-memo")?"\n메모: "+v("f-memo"):""}`;
+}
+function renderSheet(){
+  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
+  document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"가격 공지 전"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없어요.</p><div></div></li>`;
+  document.getElementById("out").textContent = orderText();
+}
+function openSheet(){ panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
+function closeSheet(){ panel.hidden=true; scrim.hidden=true; }
+document.getElementById("openSheet").onclick=openSheet;
+document.getElementById("closeSheet").onclick=closeSheet;
+scrim.onclick=closeSheet;
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!panel.hidden) closeSheet(); });
+["f-name","f-ig","f-tel","f-pick","f-memo"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("out").textContent=orderText();document.getElementById("err").textContent="";}));
+document.getElementById("copy").onclick=()=>{
+  const err=document.getElementById("err"), toast=document.getElementById("toast");
+  if(!validate()) return;
+  const text=orderText();
+  const sel=()=>{ const r=document.createRange(); r.selectNodeContents(document.getElementById("out")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); };
+  try{
+    navigator.clipboard.writeText(text).then(()=>{ toast.textContent="복사했어요. 인스타그램 @eau.jar DM에 붙여 넣어 주세요."; })
+      .catch(()=>{ sel(); toast.textContent="자동 복사가 막혀 있어요. 선택된 신청서를 직접 복사해 주세요."; });
+  }catch(e){ sel(); toast.textContent="자동 복사가 막혀 있어요. 선택된 신청서를 직접 복사해 주세요."; }
+};
+
+/* 바로 접수 (Apps Script) */
+function validate(){
+  const err=document.getElementById("err");
+  if(!document.getElementById("f-name").value.trim()||!document.getElementById("f-ig").value.trim()){ err.textContent="이름과 인스타그램 아이디를 적어 주세요. 답장을 드릴 때 필요해요."; return false; }
+  if(!document.getElementById("f-agree").checked){ err.textContent="개인정보 수집에 동의해 주셔야 신청할 수 있어요."; return false; }
+  return true;
+}
+if(ORDER_ENDPOINT){
+  document.getElementById("submit").hidden=false;
+  document.getElementById("dmHint").textContent="신청하기를 누르면 바로 접수돼요. 접수가 안 되면 신청서를 복사해 인스타그램 @eau.jar DM으로 보내 주세요.";
+}
+document.getElementById("submit").onclick=async()=>{
+  const toast=document.getElementById("toast"), btn=document.getElementById("submit");
+  if(!validate()) return;
+  const v=id=>document.getElementById(id).value.trim();
+  const items=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b).map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n]}));
+  const payload={name:v("f-name"),ig:v("f-ig"),tel:v("f-tel"),pick:v("f-pick"),memo:v("f-memo"),hp:v("f-hp"),items};
+  btn.disabled=true; btn.textContent="접수 중…";
+  try{
+    const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.error||"fail");
+    toast.textContent=`접수됐어요. 접수번호 ${j.id} · 확인 후 인스타그램으로 연락드릴게요 :)`;
+    btn.textContent="접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
+  }catch(e){
+    btn.disabled=false; btn.textContent="다시 신청하기";
+    document.getElementById("err").textContent="접수가 되지 않았어요. 잠시 뒤 다시 시도하거나, 신청서를 복사해 DM으로 보내 주세요.";
+  }
+};
+
+/* 이벤트 */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.inc){ const n=+t.dataset.inc; cart[n]=(cart[n]||0)+1; save(); renderAll(); }
+  else if(t.dataset.dec){ const n=+t.dataset.dec; cart[n]=Math.max(0,(cart[n]||0)-1); if(!cart[n]) delete cart[n]; save(); renderAll(); }
+  else if(t.dataset.set){ const s=SETS.find(x=>x.id===t.dataset.set); s.items.forEach(n=>{ if(!cart[n]) cart[n]=1; }); save(); renderAll(); }
+  else if(t.dataset.isle){ isle=t.dataset.isle; document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.isle===isle)); renderEach(); }
+});
+document.getElementById("q").addEventListener("input",e=>{ q=e.target.value.trim().toLowerCase(); renderEach(); });
+function tab(which){
+  const sets=which==="sets";
+  document.getElementById("tab-each").setAttribute("aria-selected",!sets);
+  document.getElementById("tab-sets").setAttribute("aria-selected",sets);
+  document.getElementById("each").hidden=sets; document.getElementById("sets").hidden=!sets;
+  document.getElementById("filterWrap").hidden=sets; document.getElementById("searchWrap").hidden=sets;
+}
+document.getElementById("tab-each").onclick=()=>tab("each");
+document.getElementById("tab-sets").onclick=()=>tab("sets");
+if(location.hash==="#sets") tab("sets");
+renderAll();
+</script>
+
+</body>
+</html>
