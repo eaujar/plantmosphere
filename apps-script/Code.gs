@@ -9,7 +9,8 @@
  */
 
 const ORDER_SHEET = '신청';
-const HEADER = ['접수시각', '접수번호', '이름(입금자명)', '전화번호', '이메일', '주소', '규정동의', 'No.', '학명', '개체', '수량', '상태'];
+const IMG_BASE = 'https://kbombpark.github.io/plantmosphere/';
+const HEADER = ['접수시각', '접수번호', '이름(입금자명)', '전화번호', '이메일', '주소', '규정동의', 'No.', '사진', '학명', '개체', '수량', '공구가', '금액', '상태'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -27,11 +28,18 @@ function doPost(e) {
     const sheet = getSheet();
     const id = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MMdd') + '-' + Utilities.getUuid().slice(0, 4).toUpperCase();
     const now = new Date();
-    const rows = items.map(it => [
-      now, id, name, tel, email, addr, '동의',
-      Number(it.no) || '', clip(it.name, 80), clip(it.ind, 10), Math.max(1, Math.min(20, Number(it.qty) || 1)), '접수'
-    ]);
-    sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, HEADER.length).setValues(rows);
+    const rows = items.map(it => {
+      const no = Number(it.no) || '';
+      const qty = Math.max(1, Math.min(20, Number(it.qty) || 1));
+      const price = Math.max(0, Number(it.price) || 0);
+      // 사진은 사이트의 img/번호.jpg만 허용 (다른 주소는 넣지 않음)
+      const img = /^img\/\d{2}\.jpg$/.test(String(it.img || '')) ? '=IMAGE("' + IMG_BASE + it.img + '")' : '';
+      return [now, id, name, tel, email, addr, '동의', no, img, clip(it.name, 80), clip(it.ind, 10), qty,
+        price || '미정', price ? price * qty : '미정', '접수'];
+    });
+    const start = sheet.getLastRow() + 1;
+    sheet.getRange(start, 1, rows.length, HEADER.length).setValues(rows);
+    sheet.setRowHeights(start, rows.length, 90);
     return json({ ok: true, id: id });
   } catch (err) {
     return json({ ok: false, error: 'server_error' });
@@ -53,6 +61,7 @@ function getSheet() {
     sh.appendRow(HEADER);
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, HEADER.length).setFontWeight('bold');
+    sh.setColumnWidth(HEADER.indexOf('사진') + 1, 80);
   }
   return sh;
 }

@@ -179,7 +179,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
   </header>
 
   <section class="steps" aria-label="공동구매 진행 순서">
-    <div><span class="k">Step 1</span><strong>둘러보고 담기</strong><p>개체 카드나 서식지 세트를 담습니다.</p></div>
+    <div><span class="k">Step 1</span><strong>둘러보고 담기</strong><p>개체 카드나 세트 구성을 담습니다.</p></div>
     <div><span class="k">Step 2</span><strong>신청하기</strong><p>아래 바에서 신청서를 열고 정보를 입력한 뒤 규정에 동의합니다.</p></div>
     <div><span class="k">Step 3</span><strong>24시간 안에 입금</strong><p>확정 안내를 받으면 신청자 이름으로 입금합니다.</p></div>
     <div><span class="k">Step 4</span><strong>받고 확인하기</strong><p>베어루트 그대로 도착합니다. 받는 즉시 상태를 확인합니다.</p></div>
@@ -283,7 +283,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
   <div class="bar">
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-each" aria-selected="true">개체별로 보기</button>
-      <button class="tab" role="tab" id="tab-sets" aria-selected="false">서식지 세트</button>
+      <button class="tab" role="tab" id="tab-sets" aria-selected="false">세트 구성</button>
     </div>
     <div id="filterWrap">
       <div class="filters" id="filters" aria-label="산지로 거르기"></div>
@@ -299,7 +299,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 
   <footer>
     <div class="fnotes">
-      <div>가격은 수입·검역 비용이 확정되면 공지합니다. 신청은 확정 전 수요 조사를 겸하며, 최소 수량에 못 미친 개체는 입고하지 않을 수 있어요.</div>
+      <div>공구가에는 검역·운송·통관 비용이 포함되어 있습니다. 미정인 개체는 확정 안내 때 금액을 알려드립니다. 신청은 확정 전 수요 조사를 겸하며, 최소 수량에 못 미친 개체는 입고하지 않을 수 있어요.</div>
       <div>같은 이름의 개체가 여러 장인 경우(개체 A·B·C) 사진 속 개체가 서로 달라요. 원하는 개체를 골라 담아 주세요.</div>
     </div>
     <div class="sign">
@@ -346,8 +346,8 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 /* 신청 접수 주소: Apps Script 웹 앱 URL */
 const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbzq5z-Br6cjBUzGommRCevPvYrwSFBijHfHMKnoKLCT8dcegSuZgVYtcBO4aFAMUOIS/exec";
 
-/* 가격이 정해지면 번호: 원화 가격을 적어 넣으세요. 예) 1: 18000 */
-const PRICE_KRW = {};
+/* 공구가(원): 시트 가격(USD) × 1,360원(2026-09-29 서울외국환중개 매매기준율) × 3, 100원 단위 올림. 없는 번호는 미정 */
+const PRICE_KRW = {3:57200,7:57200,9:40800,11:40800,12:40800,13:40800,14:40800,15:57200,16:61200,17:53100,19:61200,20:61200,21:61200,22:57200,23:57200,24:61200,25:57200,26:57200,27:40800,29:40800,31:49000,32:61200,33:53100,34:40800,37:53100,38:53100,39:57200,40:49000,41:61200,42:57200,44:61200,45:61200,46:49000,47:40800,48:40800,49:57200,50:53100,51:40800,52:40800,53:40800,54:40800,55:40800,56:40800,57:40800,58:102000};
 
 const PLANTS = [{"no":1,"genus":"Amorphophallus","name":"Amorphophallus pendulus","img":"img/01.jpg"},{"no":2,"genus":"Ardisia","name":"Ardisia sp","img":"img/02.jpg"},{"no":3,"genus":"Ardisia","name":"Ardisia sp blue","img":"img/03.jpg"},{"no":4,"genus":"Begonia","name":"Begonia new species from langkat sumatra","img":"img/04.jpg"},{"no":5,"genus":"Codonoboea","name":"Codonobae Dendata","img":null},{"no":6,"genus":"Codonoboea","name":"Codonoboea","img":"img/06.jpg"},{"no":7,"genus":"Codonoboea","name":"Codonoboea sp","img":"img/07.jpg"},{"no":9,"genus":"Davallia","name":"Davalia sp","img":"img/09.jpg"},{"no":10,"genus":"Dendroconche","name":"Dendroconche annabelle/microsorum","img":"img/10.jpg"},{"no":11,"genus":"Dioscorea","name":"Discorea sp","img":"img/11.jpg"},{"no":12,"genus":"Diplazium","name":"Diplazium sp","img":"img/12.jpg"},{"no":13,"genus":"Diplazium","name":"Diplazium sp","img":"img/13.jpg"},{"no":14,"genus":"Diplazium","name":"Diplazium sp","img":"img/14.jpg"},{"no":15,"genus":"Elatostema","name":"Elatostemma new sp papua","img":"img/15.jpg"},{"no":16,"genus":"Ficus","name":"Ficus sp","img":"img/16.jpg"},{"no":17,"genus":"Ficus","name":"Picus sp sumatra","img":"img/17.jpg"},{"no":18,"genus":"Freycinetia","name":"Freycinetia sp","img":null},{"no":19,"genus":"Homalomena","name":"Homalomena aaf hasei","img":"img/19.jpg"},{"no":20,"genus":"Homalomena","name":"Homalomena dolpin green","img":null},{"no":21,"genus":"Homalomena","name":"Homalomena hasei","img":"img/21.jpg"},{"no":22,"genus":"Homalomena","name":"Homalomena mini dolpin silver","img":"img/22.jpg"},{"no":23,"genus":"Homalomena","name":"Homalomena rugosum","img":"img/23.jpg"},{"no":24,"genus":"Homalomena","name":"Homalomena sp hairy","img":"img/24.jpg"},{"no":25,"genus":"Homalomena","name":"Homalomena sp sumatra","img":"img/25.jpg"},{"no":26,"genus":"Homalomena","name":"Homalomena sp sumatra","img":"img/26.jpg"},{"no":27,"genus":"Hymenophyllum","name":"Hymenophyllum","img":"img/27.jpg"},{"no":28,"genus":"Lindsaea","name":"Lindsaea sp blue","img":"img/28.jpg"},{"no":29,"genus":"Lindsaea","name":"Lindsaea sp sumatra","img":"img/29.jpg"},{"no":31,"genus":"Mapania","name":"Mapania sp","img":"img/31.jpg"},{"no":32,"genus":"Mapania","name":"Mapania sp papua","img":"img/32.jpg"},{"no":33,"genus":"Microsorum","name":"Microsorum sp","img":"img/33.jpg"},{"no":34,"genus":"Microsorum","name":"Microsorum sp blue","img":"img/34.jpg"},{"no":36,"genus":"Pinanga","name":"Pinanga disticha","img":"img/36.jpg"},{"no":37,"genus":"Piper","name":"Piper sp","img":"img/37.jpg"},{"no":38,"genus":"Piper","name":"Piper sp borneo","img":"img/38.jpg"},{"no":39,"genus":"Piper","name":"Piper sp papua","img":"img/39.jpg"},{"no":40,"genus":"Piper","name":"Piper sp Sulawesi","img":"img/40.jpg"},{"no":41,"genus":"Piper","name":"Piper sp sumatra","img":"img/41.jpg"},{"no":42,"genus":"Piper","name":"Piper sp timika","img":"img/42.jpg"},{"no":43,"genus":"Sarcopyramis","name":"Sarcopyramis green sp","img":"img/43.jpg"},{"no":44,"genus":"Sarcopyramis","name":"Sarcopyramis sp aceh","img":"img/44.jpg"},{"no":45,"genus":"Sarcopyramis","name":"Sarcopyramis sp blue","img":"img/45.jpg"},{"no":46,"genus":"Sarcopyramis","name":"Sarcopyramis sp kalimantan","img":"img/46.jpg"},{"no":47,"genus":"Selaginella","name":"Selaginella sp","img":"img/47.jpg"},{"no":48,"genus":"Selaginella","name":"Selaginella sp jambi","img":"img/48.jpg"},{"no":49,"genus":"Selliguea","name":"Selliguea sp sumatra","img":"img/49.jpg"},{"no":50,"genus":"Sonerila","name":"Sonerila sp borneo","img":"img/50.jpg"},{"no":51,"genus":"Sonerila","name":"Sonerila sp dragon","img":"img/51.jpg"},{"no":52,"genus":"Sonerila","name":"Sonerila sp java","img":"img/52.jpg"},{"no":53,"genus":"Teratophyllum","name":"Teratophylum sp","img":"img/53.jpg"},{"no":54,"genus":"Teratophyllum","name":"Teratophylum sp borneo","img":"img/54.jpg"},{"no":55,"genus":"미동정 양치","name":"Fern","img":"img/55.jpg"},{"no":56,"genus":"미동정 양치","name":"Fern sp","img":"img/56.jpg"},{"no":57,"genus":"미동정 양치","name":"Fern sp sumatra","img":"img/57.jpg"},{"no":58,"genus":"미확인","name":"Plant no id","img":"img/58.jpg"}];
 
@@ -412,7 +412,7 @@ let cart = {};
 try{ cart = JSON.parse(localStorage.getItem("pm-cart")||"{}")||{}; }catch(e){ cart={}; }
 function save(){ try{ localStorage.setItem("pm-cart", JSON.stringify(cart)); }catch(e){} }
 const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const priceText = no => PRICE_KRW[no] ? "<b>"+PRICE_KRW[no].toLocaleString("ko-KR")+"원</b>" : "가격 공지 전";
+const priceText = no => PRICE_KRW[no] ? "<b>"+PRICE_KRW[no].toLocaleString("ko-KR")+"원</b>" : "<b>미정</b>";
 
 function imgTag(p, cls){
   return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : `<div class="${cls||"blank"}"></div>`;
@@ -467,8 +467,8 @@ function renderSets(){
 }
 function renderDock(){
   const nos=Object.keys(cart).filter(k=>cart[k]>0); const total=nos.reduce((a,k)=>a+cart[k],0);
-  const priced=nos.every(k=>PRICE_KRW[k]); const sum=nos.reduce((a,k)=>a+(PRICE_KRW[k]||0)*cart[k],0);
-  document.getElementById("dockSum").innerHTML = total ? `${nos.length}종 ${total}개체 담음 <span class="mono">${priced&&sum?"· "+sum.toLocaleString("ko-KR")+"원":"· 가격 공지 전"}</span>` : "아직 담은 개체가 없어요";
+  const unpriced=nos.filter(k=>!PRICE_KRW[k]).length; const sum=nos.reduce((a,k)=>a+(PRICE_KRW[k]||0)*cart[k],0);
+  document.getElementById("dockSum").innerHTML = total ? `${nos.length}종 ${total}개체 담음 <span class="mono">${sum?"· "+sum.toLocaleString("ko-KR")+"원":""}${unpriced?" · 미정 "+unpriced+"종 별도":""}</span>` : "아직 담은 개체가 없어요";
   document.getElementById("openSheet").disabled = !total;
 }
 function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden) renderSheet(); }
@@ -477,7 +477,7 @@ function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden
 const panel=document.getElementById("panel"), scrim=document.getElementById("scrim");
 function renderSheet(){
   const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
-  document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"가격 공지 전"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없어요.</p><div></div></li>`;
+  document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"미정"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없어요.</p><div></div></li>`;
 }
 function openSheet(){ panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
 function closeSheet(){ panel.hidden=true; scrim.hidden=true; }
@@ -502,7 +502,7 @@ document.getElementById("submit").onclick=async()=>{
   const toast=document.getElementById("toast"), btn=document.getElementById("submit");
   if(!validate()) return;
   const v=id=>document.getElementById(id).value.trim();
-  const items=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b).map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n]}));
+  const items=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b).map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
   const payload={name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
   btn.disabled=true; btn.textContent="접수 중…";
   try{
