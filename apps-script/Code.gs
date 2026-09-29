@@ -9,7 +9,7 @@
  */
 
 const ORDER_SHEET = '신청';
-const HEADER = ['접수시각', '접수번호', '이름', '인스타그램', '연락처', '수령방법', '메모', 'No.', '학명', '개체', '수량', '상태'];
+const HEADER = ['접수시각', '접수번호', '이름(입금자명)', '전화번호', '이메일', '주소', '규정동의', 'No.', '학명', '개체', '수량', '상태'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -20,15 +20,15 @@ function doPost(e) {
     // 스팸 방지: 숨은 입력칸이 채워져 있으면 조용히 무시
     if (d.hp) return json({ ok: true, id: '-' });
 
-    const name = clip(d.name, 40), ig = clip(d.ig, 40);
+    const name = clip(d.name, 40), tel = clip(d.tel, 30), email = clip(d.email, 80), addr = clip(d.addr, 200);
     const items = Array.isArray(d.items) ? d.items.slice(0, 60) : [];
-    if (!name || !ig || !items.length) return json({ ok: false, error: 'missing_fields' });
+    if (!name || !tel || !email || !addr || d.agree !== true || !items.length) return json({ ok: false, error: 'missing_fields' });
 
     const sheet = getSheet();
     const id = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MMdd') + '-' + Utilities.getUuid().slice(0, 4).toUpperCase();
     const now = new Date();
     const rows = items.map(it => [
-      now, id, name, ig, clip(d.tel, 30), clip(d.pick, 40), clip(d.memo, 300),
+      now, id, name, tel, email, addr, '동의',
       Number(it.no) || '', clip(it.name, 80), clip(it.ind, 10), Math.max(1, Math.min(20, Number(it.qty) || 1)), '접수'
     ]);
     sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, HEADER.length).setValues(rows);

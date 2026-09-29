@@ -141,6 +141,26 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 .agree input{margin-top:4px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .primary:disabled{opacity:.5;cursor:default}
+
+.rules{margin:28px 0 8px;border:1px solid var(--ink);border-radius:10px;padding:20px 20px 16px}
+.rules h2{margin:0 0 12px;font-size:18px;font-weight:700;letter-spacing:-.01em}
+.keys{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.keys li{display:grid;grid-template-columns:52px 1fr;gap:10px;font-size:14px}
+.keys li span{font-size:11.5px;font-weight:700;color:var(--green-ink);letter-spacing:.06em;padding-top:2px}
+.full{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.full summary{cursor:pointer;font-weight:700;font-size:14px}
+.rules-body,.rules-box{font-size:13.5px;color:var(--ink)}
+.rules-body h3,.rules-box h3{font-size:14.5px;margin:18px 0 6px}
+.rules-body p,.rules-box p{margin:6px 0;color:var(--ink-2)}
+.rules-body ul,.rules-body ol,.rules-box ul,.rules-box ol{margin:4px 0;padding-left:20px;color:var(--ink-2)}
+.rules-body li,.rules-box li{margin:3px 0}
+.rules-body{max-width:72ch}
+.consent{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.consent-h{margin:0;font-weight:700;font-size:14px}
+.rules-box{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:4px 12px 10px;background:var(--soft)}
+.rules-box h3:first-child{margin-top:10px}
+.pay{margin:0;font-size:13px;background:#F2F8EA;border-radius:6px;padding:10px 12px;color:var(--ink)}
+.form label small{color:var(--ink-2);font-size:12px}
 </style>
 </head>
 <body>
@@ -162,6 +182,99 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
     <div><span class="k">Step 2</span><strong>신청서 만들기</strong><p>아래 바에서 신청서를 열고 연락처를 적어요.</p></div>
     <div><span class="k">Step 3</span><strong>DM으로 보내기</strong><p>만들어진 신청서를 복사해 인스타그램 DM으로 보내요.</p></div>
     <div><span class="k">Step 4</span><strong>입고식에서 받기</strong><p>순화를 마친 개체를 산지 태그와 함께 전해 드려요.</p></div>
+  </section>
+
+
+  <section class="rules" id="rules" aria-labelledby="rules-h">
+    <h2 id="rules-h">공동구매 안내 및 규정</h2>
+    <ul class="keys">
+      <li><span>입금</span>확정 안내 후 <b>24시간 이내</b> · 카카오뱅크 <b class="mono">3333-03-4776150</b> · <b>신청자와 같은 이름으로</b></li>
+      <li><span>전달</span>순화 없이 흙 없는 베어루트 상태 그대로</li>
+      <li><span>사착</span>받은 후 24시간 이내 알림 → 다음 공구 때 같은 개체 또는 공구가 50% 환불</li>
+      <li><span>취소</span>해외 발주 전 전액 환불 · 발주 후 취소 불가</li>
+    </ul>
+    <details class="full">
+      <summary>규정 전체 보기</summary>
+      <div class="rules-body" id="rulesBody">
+<p>숲에서 온 식물을 여러분의 비바리움까지 안전하게 전하기 위해 몇 가지 약속을 정했습니다. 신청 전에 꼭 읽어 주세요 :)</p>
+<h3>1. 신청과 확정</h3>
+<ul>
+<li>신청은 공동구매 페이지의 <b>신청하기</b>로 접수되며, 접수번호가 발급됩니다.</li>
+<li>신청은 수요 조사를 겸하며, 신청만으로 구매가 확정되지는 않습니다.</li>
+<li>신청 접수 시각 순서대로 확정합니다. 종별 최소 수량에 미치지 못한 개체는 진행하지 않을 수 있습니다.</li>
+<li>확정되면 입력하신 전화번호(문자) 또는 이메일로 확정 개체와 금액을 안내드립니다.</li>
+</ul>
+<h3>2. 입금</h3>
+<ul>
+<li>확정 안내를 받은 후 <b>24시간 이내</b>에 입금해 주세요.</li>
+<li>24시간이 지나면 자동으로 취소되며, 해당 개체는 다음 신청자에게 넘어갑니다.</li>
+<li>입금 계좌: <b>카카오뱅크 3333-03-4776150</b></li>
+<li><b>신청자와 같은 이름으로 입금해 주세요.</b> 이름이 다르면 입금 확인이 늦어지거나 확정되지 않을 수 있습니다.</li>
+<li>입금이 확인되면 최종 확정됩니다.</li>
+</ul>
+<h3>3. 가격과 비용</h3>
+<ul>
+<li>공구가에는 개체 가격과 함께 식물검역증명서, 항공 운송, 통관, 관부가세 등 수입에 드는 비용이 포함되어 있습니다.</li>
+<li>확정 안내 이후 환율이나 운송비가 바뀌어도 추가로 청구하지 않습니다.</li>
+<li>식물은 부가가치세 면세 품목으로, 계산서는 발급하지 않습니다.</li>
+</ul>
+<h3>4. 수입과 검역</h3>
+<ul>
+<li>모든 개체는 정식 식물검역을 거쳐 들어옵니다. 식물방역법상 흙은 수입할 수 없어 <b>흙 없이 뿌리만 있는 상태(베어루트)</b>로 도착합니다.</li>
+<li>별도의 순화 과정 없이 <b>입고된 상태 그대로</b> 전달합니다. 받으신 후의 식재와 관리는 구매자께 맡겨집니다.</li>
+<li>검역에서 폐기·반송되거나 공급처에서 누락된 개체는 <b>해당 개체 금액을 전액 환불</b>합니다.</li>
+<li>항공편이나 검역 일정으로 입고가 늦어질 수 있습니다. 지연되면 바로 알려드리며, 이에 대한 별도 보상은 없습니다.</li>
+</ul>
+<h3>5. 수령</h3>
+<ul>
+<li>신청 시 입력하신 주소로 보내드립니다. 받으시는 즉시 상태를 확인해 주세요. 상자를 여는 과정을 사진이나 영상으로 남겨 두시길 권합니다.</li>
+<li>직접 만나 전달하는 경우에는 그 자리에서 함께 상태를 확인하며, 이때 이상이 없던 개체는 이후 사착으로 보지 않습니다.</li>
+<li>주소 오기재, 연락 두절 등 구매자 사정으로 생긴 피해는 보상하지 않습니다.</li>
+</ul>
+<h3>6. 사착 보상</h3>
+<p><b>사착이란?</b> 받았을 때 줄기나 뿌리 전체가 물러 있거나, 생장점이 괴사했거나, 잎이 모두 녹아 회복이 어려운 상태를 말합니다.</p>
+<p><b>정상 범위로 보는 경우:</b> 운송 스트레스로 잎 몇 장이 노랗게 되거나 떨어짐, 잎끝 마름, 포장 과정의 눌림이나 휨. 베어루트로 긴 여정을 거친 식물에게는 흔한 일이며 대부분 회복됩니다.</p>
+<p><b>신청 방법:</b> 받은 후 <b>24시간 이내</b>에 사진이나 영상과 함께 인스타그램 <b>@eau.jar</b> DM으로 알려 주세요.</p>
+<p><b>보상:</b> 둘 중 하나를 골라 주세요.</p>
+<ol>
+<li><b>다음 공구 때 같은 개체로 보상</b></li>
+<li><b>해당 개체 공구가의 50% 환불</b></li>
+</ol>
+<ul>
+<li>다음 공구에 같은 개체가 없으면 50% 환불로 대신합니다.</li>
+<li>여러 개체 중 일부만 해당하면 그 개체만 보상하며, 배송비는 보상 금액에 포함되지 않습니다.</li>
+</ul>
+<h3>7. 취소와 환불</h3>
+<ul>
+<li>해외 발주 전에는 취소하실 수 있으며, 전액 환불됩니다.</li>
+<li>해외 발주 이후에는 취소할 수 없습니다.</li>
+<li>살아 있는 식물은 시간이 지나면 다시 판매하기 어려운 특성이 있어, 받으신 후 단순 변심에 따른 교환·환불은 할 수 없습니다.</li>
+<li>공구가 진행되지 못하면 입금액을 3영업일 이내에 전액 환불합니다.</li>
+<li>환불은 입금하신 계좌로 해 드립니다.</li>
+</ul>
+<h3>8. 보상하지 않는 경우</h3>
+<ul>
+<li>5·6항의 정상 범위에 해당하는 상태 변화</li>
+<li>받으신 후 관리 과정에서 상태가 나빠진 경우</li>
+<li>사진과 크기나 잎 색이 다른 경우 (자연물이라 빛과 환경에 따라 달라집니다)</li>
+<li>야생 개체라 작은 벌레나 달팽이 알 등이 함께 온 경우 (받으신 후 따로 두고 지켜보시길 권합니다)</li>
+<li>동정 챌린지 등 미동정 개체가 예상과 다른 종으로 밝혀진 경우</li>
+<li>받은 후 24시간이 지나 사착을 알려 주신 경우</li>
+</ul>
+<h3>9. 개인정보</h3>
+<ul>
+<li>이름, 전화번호, 이메일, 주소는 공구 진행, 연락, 배송을 위해서만 사용합니다.</li>
+<li>공구가 끝나고 3개월이 지나면 삭제합니다.</li>
+<li>받으신 식물의 사진을 기록으로 소개할 때는 따로 동의를 구합니다.</li>
+</ul>
+<h3>10. 기타</h3>
+<ul>
+<li>수출 금지, 천재지변 등 불가항력으로 진행할 수 없는 개체는 전액 환불하며, 그 외 책임은 지지 않습니다.</li>
+<li>규정에 없는 상황은 서로 이야기하며 정해요. 식물이 사람을 잇는 일이니까요 :)</li>
+</ul>
+<p>— plantmosphere. by eaujar</p>
+      </div>
+    </details>
   </section>
 
   <div class="bar">
@@ -206,24 +319,23 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
   <div class="body">
     <ul class="lines" id="lines"></ul>
     <div class="form">
-      <label>이름 또는 닉네임<input id="f-name" autocomplete="name"></label>
-      <label>인스타그램 아이디<input id="f-ig" placeholder="@"></label>
-      <label>연락처 (선택)<input id="f-tel" inputmode="tel"></label>
-      <label>수령 방법
-        <select id="f-pick">
-          <option>입고식 현장 수령</option>
-          <option>THE BOTANICAL 마켓에서 수령</option>
-          <option>택배 (고습 포장, 날씨에 따라 발송일 조정)</option>
-        </select>
-      </label>
-      <label>메모 (선택)<textarea id="f-memo" placeholder="비바리움 크기, 대체 개체 허용 여부 등"></textarea></label>
+      <label>이름 <small>(입금자명과 같아야 해요)</small><input id="f-name" autocomplete="name" required></label>
+      <label>전화번호<input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
+      <label>이메일<input id="f-email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+      <label>주소<textarea id="f-addr" autocomplete="street-address" placeholder="우편번호, 도로명 주소, 상세 주소" required></textarea></label>
     </div>
     <p class="err" id="err"></p>
-    <label class="agree"><input type="checkbox" id="f-agree"> 공동구매 진행 연락을 위한 개인정보(이름, 인스타그램, 연락처) 수집에 동의해요.</label>
+    <div class="consent">
+      <p class="consent-h">공동구매 안내 및 규정</p>
+      <div class="rules-box" id="rulesBox" tabindex="0" aria-label="공동구매 규정 전문"></div>
+      <label class="agree"><input type="checkbox" id="f-agree"> 공동구매 안내 및 규정을 모두 읽었고 동의해요. <b>(필수)</b></label>
+      <label class="agree"><input type="checkbox" id="f-privacy"> 공동구매 진행·연락·배송을 위한 개인정보(이름, 전화번호, 이메일, 주소) 수집·이용에 동의해요. 공구 종료 3개월 후 삭제돼요. <b>(필수)</b></label>
+      <p class="pay">입금 계좌 <b>카카오뱅크 3333-03-4776150</b><br>확정 안내를 받은 뒤 24시간 이내에 <b>신청자와 같은 이름으로</b> 입금해 주세요.</p>
+    </div>
     <input type="text" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
     <button class="primary" id="submit">신청하기</button>
     <p class="toast" id="toast" aria-live="polite"></p>
-    <p class="hint" id="dmHint">신청하기를 누르면 바로 접수돼요. 확인 후 인스타그램으로 순서대로 연락드릴게요 :)</p>
+    <p class="hint" id="dmHint">신청하기를 누르면 바로 접수돼요. 확정되면 문자 또는 이메일로 안내드릴게요 :)</p>
   </div>
 </aside>
 
@@ -370,27 +482,31 @@ document.getElementById("openSheet").onclick=openSheet;
 document.getElementById("closeSheet").onclick=closeSheet;
 scrim.onclick=closeSheet;
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!panel.hidden) closeSheet(); });
-["f-name","f-ig","f-tel","f-pick","f-memo"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("err").textContent="";}));
+["f-name","f-tel","f-email","f-addr","f-agree","f-privacy"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("err").textContent="";}));
 
 /* 바로 접수 (Apps Script) */
 function validate(){
-  const err=document.getElementById("err");
-  if(!document.getElementById("f-name").value.trim()||!document.getElementById("f-ig").value.trim()){ err.textContent="이름과 인스타그램 아이디를 적어 주세요. 답장을 드릴 때 필요해요."; return false; }
-  if(!document.getElementById("f-agree").checked){ err.textContent="개인정보 수집에 동의해 주셔야 신청할 수 있어요."; return false; }
+  const err=document.getElementById("err"), v=id=>document.getElementById(id).value.trim();
+  if(!v("f-name")||!v("f-tel")||!v("f-email")||!v("f-addr")){ err.textContent="이름, 전화번호, 이메일, 주소를 모두 적어 주세요."; return false; }
+  if(!/^[0-9+\-\s()]{9,}$/.test(v("f-tel"))){ err.textContent="전화번호를 숫자로 적어 주세요. (예: 010-0000-0000)"; return false; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("f-email"))){ err.textContent="이메일 주소를 확인해 주세요."; return false; }
+  if(!document.getElementById("f-agree").checked){ err.textContent="공동구매 안내 및 규정에 동의해 주셔야 신청할 수 있어요."; return false; }
+  if(!document.getElementById("f-privacy").checked){ err.textContent="개인정보 수집·이용에 동의해 주셔야 신청할 수 있어요."; return false; }
   return true;
 }
+document.getElementById("rulesBox").innerHTML=document.getElementById("rulesBody").innerHTML;
 document.getElementById("submit").onclick=async()=>{
   const toast=document.getElementById("toast"), btn=document.getElementById("submit");
   if(!validate()) return;
   const v=id=>document.getElementById(id).value.trim();
   const items=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b).map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n]}));
-  const payload={name:v("f-name"),ig:v("f-ig"),tel:v("f-tel"),pick:v("f-pick"),memo:v("f-memo"),hp:v("f-hp"),items};
+  const payload={name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
   btn.disabled=true; btn.textContent="접수 중…";
   try{
     const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
     const j=await r.json();
     if(!j.ok) throw new Error(j.error||"fail");
-    toast.textContent=`접수됐어요. 접수번호 ${j.id} · 확인 후 인스타그램으로 연락드릴게요 :)`;
+    toast.textContent=`접수됐어요. 접수번호 ${j.id} · 확정 안내를 받으면 24시간 이내에 카카오뱅크 3333-03-4776150으로 신청자 이름(${v("f-name")})으로 입금해 주세요 :)`;
     btn.textContent="접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
   }catch(e){
     btn.disabled=false; btn.textContent="다시 신청하기";
