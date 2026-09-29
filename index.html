@@ -179,9 +179,9 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 
   <section class="steps" aria-label="공동구매 진행 순서">
     <div><span class="k">Step 1</span><strong>둘러보고 담기</strong><p>개체 카드나 서식지 세트를 담아요.</p></div>
-    <div><span class="k">Step 2</span><strong>신청서 만들기</strong><p>아래 바에서 신청서를 열고 연락처를 적어요.</p></div>
-    <div><span class="k">Step 3</span><strong>DM으로 보내기</strong><p>만들어진 신청서를 복사해 인스타그램 DM으로 보내요.</p></div>
-    <div><span class="k">Step 4</span><strong>입고식에서 받기</strong><p>순화를 마친 개체를 산지 태그와 함께 전해 드려요.</p></div>
+    <div><span class="k">Step 2</span><strong>신청하기</strong><p>아래 바에서 신청서를 열고 정보를 적은 뒤 규정에 동의해요.</p></div>
+    <div><span class="k">Step 3</span><strong>24시간 안에 입금</strong><p>확정 안내를 받으면 신청자 이름으로 입금해요.</p></div>
+    <div><span class="k">Step 4</span><strong>받고 확인하기</strong><p>베어루트 그대로 도착해요. 받자마자 상태를 확인해 주세요.</p></div>
   </section>
 
 
@@ -190,7 +190,8 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
     <ul class="keys">
       <li><span>입금</span>확정 안내 후 <b>24시간 이내</b> · 카카오뱅크 <b class="mono">3333-03-4776150</b> · <b>신청자와 같은 이름으로</b></li>
       <li><span>전달</span>순화 없이 흙 없는 베어루트 상태 그대로</li>
-      <li><span>사착</span>받은 후 24시간 이내 알림 → 다음 공구 때 같은 개체 또는 공구가 50% 환불</li>
+      <li><span>사착</span>받은 후 24시간 이내 문자 알림 → 다음 공구 때 같은 개체 또는 공구가 50% 환불</li>
+      <li><span>문의</span>문자 <b class="mono">010-8212-3543</b></li>
       <li><span>취소</span>해외 발주 전 전액 환불 · 발주 후 취소 불가</li>
     </ul>
     <details class="full">
@@ -234,7 +235,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 <h3>6. 사착 보상</h3>
 <p><b>사착이란?</b> 받았을 때 줄기나 뿌리 전체가 물러 있거나, 생장점이 괴사했거나, 잎이 모두 녹아 회복이 어려운 상태를 말합니다.</p>
 <p><b>정상 범위로 보는 경우:</b> 운송 스트레스로 잎 몇 장이 노랗게 되거나 떨어짐, 잎끝 마름, 포장 과정의 눌림이나 휨. 베어루트로 긴 여정을 거친 식물에게는 흔한 일이며 대부분 회복됩니다.</p>
-<p><b>신청 방법:</b> 받은 후 <b>24시간 이내</b>에 사진이나 영상과 함께 인스타그램 <b>@eau.jar</b> DM으로 알려 주세요.</p>
+<p><b>신청 방법:</b> 받은 후 <b>24시간 이내</b>에 사진이나 영상과 함께 <b>문자(010-8212-3543)</b>로 알려 주세요.</p>
 <p><b>보상:</b> 둘 중 하나를 골라 주세요.</p>
 <ol>
 <li><b>다음 공구 때 같은 개체로 보상</b></li>
@@ -270,6 +271,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 <h3>10. 기타</h3>
 <ul>
 <li>수출 금지, 천재지변 등 불가항력으로 진행할 수 없는 개체는 전액 환불하며, 그 외 책임은 지지 않습니다.</li>
+<li>문의는 문자 <b>010-8212-3543</b>으로 보내 주세요.</li>
 <li>규정에 없는 상황은 서로 이야기하며 정해요. 식물이 사람을 잇는 일이니까요 :)</li>
 </ul>
 <p>— plantmosphere. by eaujar</p>
@@ -510,7 +512,7 @@ document.getElementById("submit").onclick=async()=>{
     btn.textContent="접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
   }catch(e){
     btn.disabled=false; btn.textContent="다시 신청하기";
-    document.getElementById("err").textContent="접수가 되지 않았어요. 잠시 뒤 다시 시도하거나 인스타그램 @eau.jar DM으로 문의해 주세요.";
+    document.getElementById("err").textContent="접수가 되지 않았어요. 잠시 뒤 다시 시도하거나 문자(010-8212-3543)로 문의해 주세요.";
   }
 };
 
