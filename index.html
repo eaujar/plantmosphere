@@ -125,7 +125,6 @@ h1 em{font-style:normal;color:var(--green-ink)}
 .form label{display:grid;gap:4px;font-size:13px;color:var(--ink-2)}
 .form input,.form select,.form textarea{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:6px;padding:9px 11px;width:100%}
 .form textarea{min-height:70px;resize:vertical}
-.out{font-size:12.5px;white-space:pre-wrap;background:var(--soft);padding:12px;border-radius:6px;max-height:260px;overflow:auto}
 .primary{background:var(--ink);color:#fff;border:0;padding:12px 16px;border-radius:999px;font-weight:700;cursor:pointer;width:100%}
 .hint{font-size:13px;color:var(--ink-2);margin:0}
 .toast{font-size:13px;color:var(--green-ink);min-height:1.2em}
@@ -141,7 +140,6 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 .agree{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--ink-2)}
 .agree input{margin-top:4px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.primary.ghost{background:#fff;color:var(--ink);border:1px solid var(--ink)}
 .primary:disabled{opacity:.5;cursor:default}
 </style>
 </head>
@@ -223,16 +221,14 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
     <p class="err" id="err"></p>
     <label class="agree"><input type="checkbox" id="f-agree"> 공동구매 진행 연락을 위한 개인정보(이름, 인스타그램, 연락처) 수집에 동의해요.</label>
     <input type="text" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
-    <button class="primary" id="submit" hidden>신청하기</button>
-    <div class="out" id="out" tabindex="0" aria-label="신청서 내용"></div>
-    <button class="primary ghost" id="copy">신청서 복사하기</button>
+    <button class="primary" id="submit">신청하기</button>
     <p class="toast" id="toast" aria-live="polite"></p>
-    <p class="hint" id="dmHint">복사한 신청서를 인스타그램 <b class="mono">@eau.jar</b> DM으로 보내 주세요. 확인 후 순서대로 답장드려요 :)</p>
+    <p class="hint" id="dmHint">신청하기를 누르면 바로 접수돼요. 확인 후 인스타그램으로 순서대로 연락드릴게요 :)</p>
   </div>
 </aside>
 
 <script>
-/* 신청 접수 주소: Apps Script 웹 앱 URL을 넣으면 "신청하기"로 바로 접수돼요. 비워 두면 복사→DM 방식으로 동작해요. */
+/* 신청 접수 주소: Apps Script 웹 앱 URL */
 const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbzq5z-Br6cjBUzGommRCevPvYrwSFBijHfHMKnoKLCT8dcegSuZgVYtcBO4aFAMUOIS/exec";
 
 /* 가격이 정해지면 번호: 원화 가격을 적어 넣으세요. 예) 1: 18000 */
@@ -364,16 +360,9 @@ function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden
 
 /* 신청서 */
 const panel=document.getElementById("panel"), scrim=document.getElementById("scrim");
-function orderText(){
-  const v=id=>document.getElementById(id).value.trim();
-  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
-  const lines=nos.map(n=>{const p=byNo[n]; return `No.${String(n).padStart(2,"0")} ${p.name}${p.ind?" ("+p.ind+")":""} × ${cart[n]}`;});
-  return `[plantmosphere. 9월 공동구매 신청]\n이름: ${v("f-name")}\n인스타그램: ${v("f-ig")}\n연락처: ${v("f-tel")||"-"}\n수령: ${v("f-pick")}\n\n${lines.join("\n")}\n\n총 ${nos.length}종 ${nos.reduce((a,n)=>a+cart[n],0)}개체${v("f-memo")?"\n메모: "+v("f-memo"):""}`;
-}
 function renderSheet(){
   const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
   document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"가격 공지 전"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없어요.</p><div></div></li>`;
-  document.getElementById("out").textContent = orderText();
 }
 function openSheet(){ panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
 function closeSheet(){ panel.hidden=true; scrim.hidden=true; }
@@ -381,17 +370,7 @@ document.getElementById("openSheet").onclick=openSheet;
 document.getElementById("closeSheet").onclick=closeSheet;
 scrim.onclick=closeSheet;
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!panel.hidden) closeSheet(); });
-["f-name","f-ig","f-tel","f-pick","f-memo"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("out").textContent=orderText();document.getElementById("err").textContent="";}));
-document.getElementById("copy").onclick=()=>{
-  const err=document.getElementById("err"), toast=document.getElementById("toast");
-  if(!validate()) return;
-  const text=orderText();
-  const sel=()=>{ const r=document.createRange(); r.selectNodeContents(document.getElementById("out")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); };
-  try{
-    navigator.clipboard.writeText(text).then(()=>{ toast.textContent="복사했어요. 인스타그램 @eau.jar DM에 붙여 넣어 주세요."; })
-      .catch(()=>{ sel(); toast.textContent="자동 복사가 막혀 있어요. 선택된 신청서를 직접 복사해 주세요."; });
-  }catch(e){ sel(); toast.textContent="자동 복사가 막혀 있어요. 선택된 신청서를 직접 복사해 주세요."; }
-};
+["f-name","f-ig","f-tel","f-pick","f-memo"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("err").textContent="";}));
 
 /* 바로 접수 (Apps Script) */
 function validate(){
@@ -399,10 +378,6 @@ function validate(){
   if(!document.getElementById("f-name").value.trim()||!document.getElementById("f-ig").value.trim()){ err.textContent="이름과 인스타그램 아이디를 적어 주세요. 답장을 드릴 때 필요해요."; return false; }
   if(!document.getElementById("f-agree").checked){ err.textContent="개인정보 수집에 동의해 주셔야 신청할 수 있어요."; return false; }
   return true;
-}
-if(ORDER_ENDPOINT){
-  document.getElementById("submit").hidden=false;
-  document.getElementById("dmHint").textContent="신청하기를 누르면 바로 접수돼요. 접수가 안 되면 신청서를 복사해 인스타그램 @eau.jar DM으로 보내 주세요.";
 }
 document.getElementById("submit").onclick=async()=>{
   const toast=document.getElementById("toast"), btn=document.getElementById("submit");
@@ -419,7 +394,7 @@ document.getElementById("submit").onclick=async()=>{
     btn.textContent="접수 완료"; cart={}; save(); renderEach(); renderSets(); renderDock();
   }catch(e){
     btn.disabled=false; btn.textContent="다시 신청하기";
-    document.getElementById("err").textContent="접수가 되지 않았어요. 잠시 뒤 다시 시도하거나, 신청서를 복사해 DM으로 보내 주세요.";
+    document.getElementById("err").textContent="접수가 되지 않았어요. 잠시 뒤 다시 시도하거나 인스타그램 @eau.jar DM으로 문의해 주세요.";
   }
 };
 
