@@ -15,6 +15,7 @@
 const VERSION = 5;
 const NOTIFY_TO = 'eaujar.kr@gmail.com'; // 신청 알림을 받을 주소
 const ORDER_SHEET = '신청';
+const SUMMARY_SHEET = '신청자별';
 const IMG_BASE = 'https://eaujar.github.io/plantmosphere/';
 // 공구가(원): 사이트의 PRICE_KRW와 같아야 합니다. 브라우저가 보낸 금액 대신 이 표로 계산합니다.
 const PRICE_KRW = {1:81600,2:81600,3:76200,4:81600,6:81600,7:76200,9:54400,10:81600,11:54400,12:54400,13:54400,14:54400,15:76200,16:81600,17:70800,19:81600,21:81600,22:76200,23:76200,24:81600,25:76200,26:76200,27:54400,28:81600,29:54400,31:65300,32:81600,33:70800,34:54400,36:81600,37:70800,38:70800,39:76200,40:65300,41:81600,42:76200,43:81600,44:81600,45:81600,46:65300,47:54400,48:54400,49:76200,50:70800,51:54400,52:54400,53:54400,54:54400,55:54400,56:54400,57:54400,58:136000};
@@ -35,6 +36,7 @@ function doPost(e) {
     if (!name || !tel || !email || !addr || d.agree !== true || !items.length) return json({ ok: false, error: 'missing_fields' });
 
     const sheet = getSheet();
+    ensureSummary();
     const id = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MMdd') + '-' + Utilities.getUuid().slice(0, 4).toUpperCase();
     let status = '접수';
     let replaced = [];
@@ -130,6 +132,7 @@ function notify(o) {
 
 // 편집기에서 이 함수를 선택해 ▶ 실행하면 알림 메일이 오는지 바로 확인할 수 있습니다.
 function testMail() {
+  getSheet(); ensureSummary(); // '신청'·'신청자별' 탭도 미리 만들어 둡니다
   MailApp.sendEmail({ to: NOTIFY_TO, subject: '[plantmosphere] 알림 메일 테스트',
     body: '이 메일이 보이면 신청 알림이 정상적으로 발송됩니다.\n남은 하루 발송 가능 수: ' + MailApp.getRemainingDailyQuota(),
     name: 'plantmosphere. 공동구매' });
@@ -154,6 +157,26 @@ function getSheet() {
     sh.setColumnWidth(COL('사진') + 1, 80);
   }
   return sh;
+}
+
+// '신청자별' 탭: '신청' 탭을 신청 건별로 묶어 종 수·개체 수·합계 금액을 보여줍니다. ('수정됨' 줄 제외)
+function ensureSummary() {
+  const ss = SpreadsheetApp.getActive();
+  const formula = "=QUERY('" + ORDER_SHEET + "'!A:O, \"select min(A), B, C, D, E, F, count(H), sum(L), sum(N), max(O) " +
+    "where H is not null and not O starts with '수정됨' group by B, C, D, E, F order by min(A) " +
+    "label min(A) '접수시각', B '접수번호', C '이름(입금자명)', D '전화번호', E '이메일', F '주소', " +
+    "count(H) '종 수', sum(L) '개체 수', sum(N) '합계 금액', max(O) '상태'\", 1)";
+  let sh = ss.getSheetByName(SUMMARY_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(SUMMARY_SHEET);
+    sh.setFrozenRows(1);
+    sh.getRange('A1:J1').setFontWeight('bold');
+    sh.getRange('A:A').setNumberFormat('yyyy-mm-dd hh:mm');
+    sh.getRange('I:I').setNumberFormat('#,##0"원"');
+    sh.setColumnWidth(6, 260);
+  }
+  // '신청' 탭을 지웠다가 다시 만들면 수식이 깨지므로(#REF) 항상 원래 수식으로 되돌립니다.
+  if (sh.getRange('A1').getFormula() !== formula) sh.getRange('A1').setFormula(formula);
 }
 
 function clip(v, n) {
