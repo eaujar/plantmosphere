@@ -12,9 +12,11 @@
  * 운영자가 상태를 '확정' 등 다른 값으로 바꾼 신청은 페이지에서 수정할 수 없습니다.
  */
 
-const VERSION = 2;
+const VERSION = 3;
 const ORDER_SHEET = '신청';
 const IMG_BASE = 'https://kbombpark.github.io/plantmosphere/';
+// 공구가(원): 사이트의 PRICE_KRW와 같아야 합니다. 브라우저가 보낸 금액 대신 이 표로 계산합니다.
+const PRICE_KRW = {1:81600,2:81600,3:76200,4:81600,6:81600,7:76200,9:54400,10:81600,11:54400,12:54400,13:54400,14:54400,15:76200,16:81600,17:70800,19:81600,21:81600,22:76200,23:76200,24:81600,25:76200,26:76200,27:54400,28:81600,29:54400,31:65300,32:81600,33:70800,34:54400,36:81600,37:70800,38:70800,39:76200,40:65300,41:81600,42:76200,43:81600,44:81600,45:81600,46:65300,47:54400,48:54400,49:76200,50:70800,51:54400,52:54400,53:54400,54:54400,55:54400,56:54400,57:54400,58:136000};
 const HEADER = ['접수시각', '접수번호', '이름(입금자명)', '전화번호', '이메일', '주소', '규정동의', 'No.', '사진', '학명', '개체', '수량', '공구가', '금액', '상태'];
 const COL = name => HEADER.indexOf(name); // 0부터 시작하는 열 번호
 
@@ -28,7 +30,7 @@ function doPost(e) {
     if (d.hp) return json({ ok: true, id: '-' });
 
     const name = clip(d.name, 40), tel = clip(d.tel, 30), email = clip(d.email, 80), addr = clip(d.addr, 200);
-    const items = Array.isArray(d.items) ? d.items.slice(0, 60) : [];
+    const items = (Array.isArray(d.items) ? d.items.slice(0, 60) : []).filter(it => PRICE_KRW[Number(it.no)]);
     if (!name || !tel || !email || !addr || d.agree !== true || !items.length) return json({ ok: false, error: 'missing_fields' });
 
     const sheet = getSheet();
@@ -48,7 +50,7 @@ function doPost(e) {
     const rows = items.map(it => {
       const no = Number(it.no) || '';
       const qty = Math.max(1, Math.min(20, Number(it.qty) || 1));
-      const price = Math.max(0, Number(it.price) || 0);
+      const price = PRICE_KRW[no] || 0;
       // 사진은 사이트의 img/번호.jpg만 허용 (다른 주소는 넣지 않음)
       const img = /^img\/\d{2}\.jpg$/.test(String(it.img || '')) ? '=IMAGE("' + IMG_BASE + it.img + '")' : '';
       return [now, id, name, tel, email, addr, '동의', no, img, clip(it.name, 80), clip(it.ind, 10), qty,
