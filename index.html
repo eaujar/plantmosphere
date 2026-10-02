@@ -367,10 +367,10 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
     <ul class="lines" id="lines"></ul>
     <div class="total" id="total" aria-live="polite"></div>
     <div class="form">
-      <label>이름 <small>(입금자명과 같아야 합니다)</small><input id="f-name" autocomplete="name" required></label>
-      <label>전화번호<input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
-      <label>이메일<input id="f-email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
-      <label>주소<textarea id="f-addr" autocomplete="street-address" placeholder="우편번호, 도로명 주소, 상세 주소" required></textarea></label>
+      <label>이름 <small>(입금자명과 같아야 합니다)</small><input id="f-name" autocomplete="name" maxlength="40" required></label>
+      <label>전화번호<input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="20" required></label>
+      <label>이메일<input id="f-email" type="email" autocomplete="email" placeholder="name@example.com" maxlength="80" required></label>
+      <label>주소<textarea id="f-addr" autocomplete="street-address" placeholder="우편번호, 도로명 주소, 상세 주소" maxlength="200" required></textarea></label>
     </div>
     <p class="err" id="err"></p>
     <div class="consent">
@@ -471,8 +471,13 @@ const SETS = [
 ];
 
 /* 장바구니 */
+function cleanCart(c){
+  const out={};
+  if(c && typeof c==="object") Object.keys(c).forEach(k=>{ const n=Number(k), q=Math.floor(Number(c[k])); if(byNo[n] && q>0) out[n]=Math.min(q,20); });
+  return out;
+}
 let cart = {};
-try{ cart = JSON.parse(localStorage.getItem("pm-cart")||"{}")||{}; }catch(e){ cart={}; }
+try{ cart = cleanCart(JSON.parse(localStorage.getItem("pm-cart")||"{}")); }catch(e){ cart={}; }
 function save(){ try{ localStorage.setItem("pm-cart", JSON.stringify(cart)); }catch(e){} }
 const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const priceText = no => PRICE_KRW[no] ? "<b>"+PRICE_KRW[no].toLocaleString("ko-KR")+"원</b>" : "<b>미정</b>";
@@ -554,9 +559,10 @@ function renderSheet(){
   document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"미정"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없습니다.</p><div></div></li>`;
   renderTotal();
 }
-let editMode=false;
+let editMode=false, submitting=false;
 function loadLast(){ try{ return JSON.parse(localStorage.getItem("pm-last")||"null"); }catch(e){ return null; } }
 function resetPanel(){
+  if(submitting) return;
   const btn=document.getElementById("submit");
   btn.disabled=false; btn.textContent=editMode?"수정 신청":"신청";
   document.getElementById("toast").textContent=""; document.getElementById("err").textContent="";
@@ -569,12 +575,12 @@ function openEdit(){
   const last=loadLast();
   if(last){
     ["name","tel","email","addr"].forEach(k=>{ const el=document.getElementById("f-"+k); if(!el.value.trim()) el.value=last[k]||""; });
-    if(!Object.keys(cart).length && last.cart){ cart={...last.cart}; save(); renderEach(); renderSets(); renderDock(); }
+    if(!Object.keys(cart).length && last.cart){ cart=cleanCart(last.cart); save(); renderEach(); renderSets(); renderDock(); }
   }
   resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus();
 }
 document.getElementById("openEdit").onclick=openEdit;
-function closeSheet(){ panel.hidden=true; scrim.hidden=true; }
+function closeSheet(){ if(submitting) return; panel.hidden=true; scrim.hidden=true; }
 document.getElementById("openSheet").onclick=openSheet;
 document.getElementById("closeSheet").onclick=closeSheet;
 scrim.onclick=closeSheet;
@@ -594,19 +600,20 @@ function validate(){
 document.getElementById("rulesBox").innerHTML=document.getElementById("rulesBody").innerHTML;
 document.getElementById("submit").onclick=async()=>{
   const toast=document.getElementById("toast"), btn=document.getElementById("submit"), err=document.getElementById("err");
-  if(!validate()) return;
+  if(submitting||!validate()) return;
   const v=id=>document.getElementById(id).value.trim();
   const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
   if(!nos.length){ err.textContent="담은 개체가 없습니다. 창을 닫고 개체를 담은 뒤 다시 시도해 주십시오."; return; }
   const items=nos.map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
-  const payload={mode:editMode?"edit":"new",total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items,ig:v("f-email"),pick:v("f-addr")};
+  const payload={mode:editMode?"edit":"new",total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items};
   const label=editMode?"수정 신청":"신청";
-  btn.disabled=true; btn.textContent="접수 중…"; document.getElementById("wait").hidden=false;
+  submitting=true; btn.disabled=true; btn.textContent="접수 중…"; document.getElementById("wait").hidden=false;
   let j=null;
   try{
     const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
     j=await r.json();
   }catch(e){ j=null; }
+  submitting=false;
   document.getElementById("wait").hidden=true;
   if(!j||!j.ok){
     btn.disabled=false; btn.textContent="다시 "+label;
@@ -652,7 +659,7 @@ fetch(ORDER_ENDPOINT).then(r=>r.json()).then(j=>{ if(j&&j.version>=2) document.g
 /* 이벤트 */
 document.addEventListener("click",e=>{
   const t=e.target.closest("button"); if(!t) return;
-  if(t.dataset.inc){ const n=+t.dataset.inc; cart[n]=(cart[n]||0)+1; save(); renderAll(); }
+  if(t.dataset.inc){ const n=+t.dataset.inc; cart[n]=Math.min(20,(cart[n]||0)+1); save(); renderAll(); }
   else if(t.dataset.dec){ const n=+t.dataset.dec; cart[n]=Math.max(0,(cart[n]||0)-1); if(!cart[n]) delete cart[n]; save(); renderAll(); }
   else if(t.dataset.set){ const s=SETS.find(x=>x.id===t.dataset.set); s.items.forEach(n=>{ if(!cart[n]) cart[n]=1; }); save(); renderAll(); }
   else if(t.dataset.isle){ isle=t.dataset.isle; document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.isle===isle)); renderEach(); }
