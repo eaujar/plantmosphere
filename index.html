@@ -618,13 +618,18 @@ document.getElementById("submit").onclick=async()=>{
   const label=editMode?"수정 신청":"신청";
   submitting=true; btn.disabled=true; btn.textContent="접수 중…"; document.getElementById("wait").hidden=false;
   let j=null;
-  try{
-    const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-    j=await r.json();
-  }catch(e){ j=null; }
+  // 서버가 신청을 처리하지 않고 상태 응답(service)만 돌려주면 기록되지 않은 것이므로 다시 보냅니다.
+  for(let attempt=0; attempt<3; attempt++){
+    try{
+      const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+      j=await r.json();
+    }catch(e){ j=null; break; }
+    if(!(j && j.service && !j.id)) break;
+    j=null; await new Promise(res=>setTimeout(res,1500));
+  }
   submitting=false;
   document.getElementById("wait").hidden=true;
-  if(!j||!j.ok){
+  if(!j||!j.ok||!j.id){
     btn.disabled=false; btn.textContent="다시 "+label;
     const code=j&&j.error;
     err.textContent = code==="not_found" ? "일치하는 신청을 찾지 못했습니다. 처음 신청할 때와 같은 이름과 전화번호를 입력해 주십시오."
