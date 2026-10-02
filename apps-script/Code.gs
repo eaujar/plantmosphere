@@ -12,7 +12,7 @@
  * 운영자가 상태를 '확정' 등 다른 값으로 바꾼 신청은 페이지에서 수정할 수 없습니다.
  */
 
-const VERSION = 5;
+const VERSION = 6;
 const NOTIFY_TO = 'eaujar.kr@gmail.com'; // 신청 알림을 받을 주소
 const ORDER_SHEET = '신청';
 const SUMMARY_SHEET = '신청자별';
@@ -34,6 +34,14 @@ function doPost(e) {
     const name = clip(d.name, 40), tel = clip(d.tel, 30), email = clip(d.email, 80), addr = clip(d.addr, 200);
     const items = (Array.isArray(d.items) ? d.items.slice(0, 60) : []).filter(it => PRICE_KRW[Number(it.no)]);
     if (!name || !tel || !email || !addr || d.agree !== true || !items.length) return json({ ok: false, error: 'missing_fields' });
+
+    // 같은 신청이 다시 오면(응답 유실 후 재전송 등) 새로 기록하지 않고 처음 접수번호를 돌려줍니다.
+    const key = /^[A-Za-z0-9-]{8,64}$/.test(String(d.key || '')) ? 'req:' + d.key : '';
+    const cache = CacheService.getScriptCache();
+    if (key) {
+      const prev = cache.get(key);
+      if (prev) return json(Object.assign(JSON.parse(prev), { dup: true }));
+    }
 
     const sheet = getSheet();
     ensureSummary();
@@ -63,12 +71,14 @@ function doPost(e) {
     sheet.getRange(start, COL('전화번호') + 1, rows.length, 1).setNumberFormat('@'); // 010의 0이 사라지지 않게
     sheet.getRange(start, 1, rows.length, HEADER.length).setValues(rows);
     sheet.setRowHeights(start, rows.length, 90);
+    const result = { ok: true, id: id, mode: d.mode === 'edit' ? 'edit' : 'new', replaced: replaced };
+    if (key) cache.put(key, JSON.stringify(result), 21600); // 6시간 보관
     lock.releaseLock();
 
     // 새 신청·수정 알림 메일 (메일이 실패해도 신청은 접수된 상태로 둡니다)
     try { notify({ id, name, tel, email, addr, rows, replaced, edit: d.mode === 'edit' }); } catch (mailErr) { console.error('알림 메일 실패: ' + mailErr); }
 
-    return json({ ok: true, id: id, mode: d.mode === 'edit' ? 'edit' : 'new', replaced: replaced });
+    return json(result);
   } catch (err) {
     return json({ ok: false, error: 'server_error' });
   } finally {

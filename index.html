@@ -566,7 +566,7 @@ function renderSheet(){
   document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"미정"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없습니다.</p><div></div></li>`;
   renderTotal();
 }
-let editMode=false, submitting=false;
+let editMode=false, submitting=false, reqKey="";
 function loadLast(){ try{ return JSON.parse(localStorage.getItem("pm-last")||"null"); }catch(e){ return null; } }
 function resetPanel(){
   if(submitting) return;
@@ -576,9 +576,10 @@ function resetPanel(){
   document.getElementById("editNote").hidden=!editMode;
   document.getElementById("panelTitle").textContent=editMode?"신청 내용 수정":"공동구매 신청서";
 }
-function openSheet(){ editMode=false; resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
+function openSheet(){ if(!submitting) reqKey=""; editMode=false; resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
 function openEdit(){
   if(isClosed()) return;
+  if(!submitting) reqKey="";
   editMode=true;
   const last=loadLast();
   if(last){
@@ -593,7 +594,7 @@ document.getElementById("openSheet").onclick=openSheet;
 document.getElementById("closeSheet").onclick=closeSheet;
 scrim.onclick=closeSheet;
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!panel.hidden) closeSheet(); });
-["f-name","f-tel","f-email","f-addr","f-agree","f-privacy"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("err").textContent="";}));
+["f-name","f-tel","f-email","f-addr","f-agree","f-privacy"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("err").textContent=""; if(!submitting) reqKey="";}));
 
 /* 바로 접수 (Apps Script) */
 function validate(){
@@ -614,7 +615,8 @@ document.getElementById("submit").onclick=async()=>{
   const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
   if(!nos.length){ err.textContent="담은 개체가 없습니다. 창을 닫고 개체를 담은 뒤 다시 시도해 주십시오."; return; }
   const items=nos.map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
-  const payload={mode:editMode?"edit":"new",total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items};
+  if(!reqKey) reqKey=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,12));
+  const payload={key:reqKey,mode:editMode?"edit":"new",total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items};
   const label=editMode?"수정 신청":"신청";
   submitting=true; btn.disabled=true; btn.textContent="접수 중…"; document.getElementById("wait").hidden=false;
   let j=null;
@@ -637,6 +639,7 @@ document.getElementById("submit").onclick=async()=>{
       : "접수가 되지 않았습니다. 잠시 뒤 다시 시도하거나 문자(010-8212-3543)로 문의해 주십시오.";
     return;
   }
+  reqKey="";
   const t=totals();
   try{ localStorage.setItem("pm-last", JSON.stringify({id:j.id,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),cart:{...cart}})); }catch(e){}
   btn.textContent=editMode?"수정 완료":"접수 완료";
@@ -673,6 +676,7 @@ if(!isClosed()) fetch(ORDER_ENDPOINT).then(r=>r.json()).then(j=>{ if(j&&j.versio
 /* 이벤트 */
 document.addEventListener("click",e=>{
   const t=e.target.closest("button"); if(!t) return;
+  if((t.dataset.inc||t.dataset.dec||t.dataset.set) && !submitting) reqKey="";
   if(t.dataset.inc){ const n=+t.dataset.inc; cart[n]=Math.min(20,(cart[n]||0)+1); save(); renderAll(); }
   else if(t.dataset.dec){ const n=+t.dataset.dec; cart[n]=Math.max(0,(cart[n]||0)-1); if(!cart[n]) delete cart[n]; save(); renderAll(); }
   else if(t.dataset.set){ const s=SETS.find(x=>x.id===t.dataset.set); s.items.forEach(n=>{ if(!cart[n]) cart[n]=1; }); save(); renderAll(); }
