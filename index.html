@@ -52,13 +52,12 @@ h1 em{font-style:normal;color:var(--green-ink)}
 @media (max-width:720px){.mast-row{grid-template-columns:1fr}.lot{text-align:left}}
 
 /* how it works */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin:28px 0 12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:28px 0 12px}
 .steps div{border-top:2px solid var(--ink);padding-top:10px}
 .steps .k{font-size:11px;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase;font-weight:700}
 .steps p{margin:2px 0 0;font-size:13.5px;color:var(--ink-2)}
 .steps strong{display:block;color:var(--ink);font-weight:700;font-size:15px;margin-top:2px}
-@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
-@media (max-width:460px){.steps{grid-template-columns:1fr}}
+@media (max-width:640px){.steps{grid-template-columns:1fr}}
 
 /* tabs + filters */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);padding-block:14px 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
@@ -239,7 +238,6 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
     <div><span class="k">Step 1</span><strong>둘러보고 담기</strong><p>개체 카드나 세트 구성을 담습니다.</p></div>
     <div><span class="k">Step 2</span><strong>신청하기</strong><p>아래 바에서 신청서를 열고 정보를 입력한 뒤 규정에 동의합니다.</p></div>
     <div><span class="k">Step 3</span><strong>24시간 안에 입금</strong><p>확정 안내를 받으면 신청자 이름으로 입금합니다.</p></div>
-    <div><span class="k">Step 4</span><strong>받고 확인하기</strong><p>베어루트 그대로 도착합니다. 받는 즉시 상태를 확인합니다.</p></div>
   </section>
 
 
