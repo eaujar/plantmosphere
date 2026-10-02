@@ -620,13 +620,14 @@ document.getElementById("submit").onclick=async()=>{
   const label=editMode?"수정 신청":"신청";
   submitting=true; btn.disabled=true; btn.textContent="접수 중…"; document.getElementById("wait").hidden=false;
   let j=null;
-  // 서버가 신청을 처리하지 않고 상태 응답(service)만 돌려주면 기록되지 않은 것이므로 다시 보냅니다.
+  // 응답이 오류 화면이거나 상태 응답(service)뿐이면 다시 보냅니다.
+  // 같은 key로 보내므로 서버가 이미 기록한 신청은 새로 기록하지 않고 처음 접수번호를 돌려줍니다.
   for(let attempt=0; attempt<3; attempt++){
     try{
       const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
       j=await r.json();
-    }catch(e){ j=null; break; }
-    if(!(j && j.service && !j.id)) break;
+    }catch(e){ j=null; }
+    if(j && (j.id || (j.ok===false && j.error))) break;   // 접수 완료, 또는 확정적인 거절(not_found 등)
     j=null; if(attempt<2) await new Promise(res=>setTimeout(res,1500));
   }
   submitting=false;
