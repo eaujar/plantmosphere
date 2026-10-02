@@ -216,7 +216,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
         <h1>인도네시아 숲에서 온<br><em>52종</em>의 식물, 10월 공동구매</h1>
         <p class="lede">인도네시아 수마트라·보르네오·파푸아·술라웨시의 숲 바닥과 바위, 나무껍질에서 자라던 식물들입니다. 이름을 보고 고르기보다, 어디서 어떻게 살던 식물인지 보고 골라 주십시오. 내 비바리움의 어느 자리에 놓일지 떠올리면서…</p>
       </div>
-      <div class="lot">Lot <b>2026-10</b><br>Species <b>52</b><br>Origin <b>Indonesia</b></div>
+      <div class="lot">Lot <b>2026-10</b><br>Until <b>10.15 Thu</b><br>Species <b>52</b><br>Origin <b>Indonesia</b></div>
     </div>
   </header>
 
@@ -231,6 +231,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
   <section class="rules" id="rules" aria-labelledby="rules-h">
     <h2 id="rules-h">공동구매 안내 및 규정</h2>
     <ul class="keys">
+      <li><span>모집</span><div><b>2026년 10월 15일(목) 23:59까지</b></div></li>
       <li><span>입금</span><div>확정 안내 후 <b>24시간 이내</b> · 카카오뱅크 <b class="mono">3333-03-4776150</b> · <b>신청자와 같은 이름으로</b></div></li>
       <li><span>전달</span><div>순화 없이 흙 없는 베어루트 상태 그대로</div></li>
       <li><span>사착</span><div>받은 후 24시간 이내 문자 알림 → 다음 공구 때 같은 개체 또는 공구가 50% 환불</div></li>
@@ -244,6 +245,7 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 <h3>1. 신청과 확정</h3>
 <ul>
 <li>신청은 공동구매 페이지의 <b>신청</b> 버튼으로 접수되며, 접수번호가 발급됩니다.</li>
+<li>모집 기간은 <b>2026년 10월 15일(목) 23시 59분까지</b>입니다. 마감 후에는 신청과 수정을 받지 않습니다.</li>
 <li>신청은 수요 조사를 겸하며, 신청만으로 구매가 확정되지는 않습니다.</li>
 <li>확정 안내를 받기 전까지는 페이지 하단의 <b>신청 내용 수정</b>으로 신청 내용을 바꿀 수 있습니다. 처음 신청할 때와 같은 이름과 전화번호를 입력해야 하며, 이전 신청은 새 내용으로 대체됩니다. 확정 안내 이후의 변경은 문자로 문의해 주십시오.</li>
 <li>신청 접수 시각 순서대로 확정합니다. 종별 최소 수량에 미치지 못한 개체는 진행하지 않을 수 있습니다.</li>
@@ -470,6 +472,10 @@ const SETS = [
   {id:"mystery",k:"Unidentified",title:"동정 챌린지",text:"이름을 모르는 채로 들여와 키우며 함께 알아가는 세트. 자라는 모습을 공유해 주시면 plantmosphere. 기록으로 남깁니다.",items:[58,55,56,57]}
 ];
 
+/* 모집 마감: 2026-10-15 23:59:59 KST */
+const CLOSE_AT = new Date("2026-10-15T23:59:59+09:00");
+const isClosed = () => Date.now() > CLOSE_AT.getTime();
+
 /* 장바구니 */
 function cleanCart(c){
   const out={};
@@ -536,7 +542,8 @@ function renderDock(){
   const nos=Object.keys(cart).filter(k=>cart[k]>0); const total=nos.reduce((a,k)=>a+cart[k],0);
   const unpriced=nos.filter(k=>!PRICE_KRW[k]).length; const sum=nos.reduce((a,k)=>a+(PRICE_KRW[k]||0)*cart[k],0);
   document.getElementById("dockSum").innerHTML = total ? `${nos.length}종 ${total}개체 담음 <span class="mono">${sum?"· "+sum.toLocaleString("ko-KR")+"원":""}${unpriced?" · 미정 "+unpriced+"종 별도":""}</span>` : "아직 담은 개체가 없습니다";
-  document.getElementById("openSheet").disabled = !total;
+  document.getElementById("openSheet").disabled = !total || isClosed();
+  if(isClosed()) document.getElementById("dockSum").textContent = "모집이 마감되었습니다. 문의는 문자 010-8212-3543으로 보내 주십시오.";
 }
 function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden) renderSheet(); }
 
@@ -571,6 +578,7 @@ function resetPanel(){
 }
 function openSheet(){ editMode=false; resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
 function openEdit(){
+  if(isClosed()) return;
   editMode=true;
   const last=loadLast();
   if(last){
@@ -600,6 +608,7 @@ function validate(){
 document.getElementById("rulesBox").innerHTML=document.getElementById("rulesBody").innerHTML;
 document.getElementById("submit").onclick=async()=>{
   const toast=document.getElementById("toast"), btn=document.getElementById("submit"), err=document.getElementById("err");
+  if(isClosed()){ document.getElementById("err").textContent="모집이 마감되어 신청을 받지 않습니다. 문의는 문자(010-8212-3543)로 보내 주십시오."; return; }
   if(submitting||!validate()) return;
   const v=id=>document.getElementById(id).value.trim();
   const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
@@ -654,7 +663,7 @@ document.getElementById("goHome").onclick=()=>{
 };
 
 /* 수정 기능은 시트 코드가 지원할 때만 표시 */
-fetch(ORDER_ENDPOINT).then(r=>r.json()).then(j=>{ if(j&&j.version>=2) document.getElementById("openEdit").hidden=false; }).catch(()=>{});
+if(!isClosed()) fetch(ORDER_ENDPOINT).then(r=>r.json()).then(j=>{ if(j&&j.version>=2) document.getElementById("openEdit").hidden=false; }).catch(()=>{});
 
 /* 이벤트 */
 document.addEventListener("click",e=>{
