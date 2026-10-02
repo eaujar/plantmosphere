@@ -12,7 +12,7 @@
  * 운영자가 상태를 '확정' 등 다른 값으로 바꾼 신청은 페이지에서 수정할 수 없습니다.
  */
 
-const VERSION = 3;
+const VERSION = 4;
 const ORDER_SHEET = '신청';
 const IMG_BASE = 'https://eaujar.github.io/plantmosphere/';
 // 공구가(원): 사이트의 PRICE_KRW와 같아야 합니다. 브라우저가 보낸 금액 대신 이 표로 계산합니다.
@@ -60,6 +60,11 @@ function doPost(e) {
     sheet.getRange(start, COL('전화번호') + 1, rows.length, 1).setNumberFormat('@'); // 010의 0이 사라지지 않게
     sheet.getRange(start, 1, rows.length, HEADER.length).setValues(rows);
     sheet.setRowHeights(start, rows.length, 90);
+    lock.releaseLock();
+
+    // 새 신청·수정 알림 메일 (메일이 실패해도 신청은 접수된 상태로 둡니다)
+    try { notify({ id, name, tel, email, addr, rows, replaced, edit: d.mode === 'edit' }); } catch (mailErr) {}
+
     return json({ ok: true, id: id, mode: d.mode === 'edit' ? 'edit' : 'new', replaced: replaced });
   } catch (err) {
     return json({ ok: false, error: 'server_error' });
@@ -87,6 +92,40 @@ function findActive(sheet, name, tel) {
     }
   });
   return res;
+}
+
+// 운영자(스크립트 소유자)에게 신청 요약 메일을 보냅니다.
+function notify(o) {
+  const to = Session.getEffectiveUser().getEmail();
+  if (!to) return;
+  const won = n => Number(n).toLocaleString('ko-KR') + '원';
+  const total = o.rows.reduce((a, r) => a + (Number(r[COL('금액')]) || 0), 0);
+  const count = o.rows.reduce((a, r) => a + Number(r[COL('수량')]), 0);
+  const lines = o.rows.map(r => {
+    const no = String(r[COL('No.')]).padStart(2, '0');
+    const ind = r[COL('개체')] ? ' (' + r[COL('개체')] + ')' : '';
+    return 'No.' + no + ' ' + r[COL('학명')] + ind + ' × ' + r[COL('수량')] + ' = ' + won(r[COL('금액')]);
+  });
+  const tag = o.edit ? '[수정] ' : '';
+  const subject = '[plantmosphere] ' + tag + (o.edit ? '수정 신청 ' : '새 신청 ') + o.id + ' · ' + o.name + ' · ' + won(total);
+  const body = [
+    (o.edit ? '신청 내용이 수정되었습니다.' : '새 공동구매 신청이 들어왔습니다.'),
+    o.edit && o.replaced.length ? '대체된 이전 신청: ' + o.replaced.join(', ') : '',
+    '',
+    '접수번호: ' + o.id,
+    '이름(입금자명): ' + o.name,
+    '전화번호: ' + o.tel,
+    '이메일: ' + o.email,
+    '주소: ' + o.addr,
+    '',
+    '[신청 개체] ' + o.rows.length + '종 ' + count + '개체',
+  ].concat(lines, [
+    '',
+    '최종 입금액: ' + won(total),
+    '',
+    '신청 시트: ' + SpreadsheetApp.getActive().getUrl(),
+  ]).filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n');
+  MailApp.sendEmail({ to: to, subject: subject, body: body, name: 'plantmosphere. 공동구매' });
 }
 
 function normName(v) { return String(v || '').replace(/^'/, '').replace(/\s+/g, '').toLowerCase(); }
