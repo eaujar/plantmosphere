@@ -12,7 +12,8 @@
  * 운영자가 상태를 '확정' 등 다른 값으로 바꾼 신청은 페이지에서 수정할 수 없습니다.
  */
 
-const VERSION = 4;
+const VERSION = 5;
+const NOTIFY_TO = 'eaujar.kr@gmail.com'; // 신청 알림을 받을 주소
 const ORDER_SHEET = '신청';
 const IMG_BASE = 'https://eaujar.github.io/plantmosphere/';
 // 공구가(원): 사이트의 PRICE_KRW와 같아야 합니다. 브라우저가 보낸 금액 대신 이 표로 계산합니다.
@@ -63,7 +64,7 @@ function doPost(e) {
     lock.releaseLock();
 
     // 새 신청·수정 알림 메일 (메일이 실패해도 신청은 접수된 상태로 둡니다)
-    try { notify({ id, name, tel, email, addr, rows, replaced, edit: d.mode === 'edit' }); } catch (mailErr) {}
+    try { notify({ id, name, tel, email, addr, rows, replaced, edit: d.mode === 'edit' }); } catch (mailErr) { console.error('알림 메일 실패: ' + mailErr); }
 
     return json({ ok: true, id: id, mode: d.mode === 'edit' ? 'edit' : 'new', replaced: replaced });
   } catch (err) {
@@ -96,8 +97,7 @@ function findActive(sheet, name, tel) {
 
 // 운영자(스크립트 소유자)에게 신청 요약 메일을 보냅니다.
 function notify(o) {
-  const to = Session.getEffectiveUser().getEmail();
-  if (!to) return;
+  const to = NOTIFY_TO;
   const won = n => Number(n).toLocaleString('ko-KR') + '원';
   const total = o.rows.reduce((a, r) => a + (Number(r[COL('금액')]) || 0), 0);
   const count = o.rows.reduce((a, r) => a + Number(r[COL('수량')]), 0);
@@ -126,6 +126,13 @@ function notify(o) {
     '신청 시트: ' + SpreadsheetApp.getActive().getUrl(),
   ]).filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n');
   MailApp.sendEmail({ to: to, subject: subject, body: body, name: 'plantmosphere. 공동구매' });
+}
+
+// 편집기에서 이 함수를 선택해 ▶ 실행하면 알림 메일이 오는지 바로 확인할 수 있습니다.
+function testMail() {
+  MailApp.sendEmail({ to: NOTIFY_TO, subject: '[plantmosphere] 알림 메일 테스트',
+    body: '이 메일이 보이면 신청 알림이 정상적으로 발송됩니다.\n남은 하루 발송 가능 수: ' + MailApp.getRemainingDailyQuota(),
+    name: 'plantmosphere. 공동구매' });
 }
 
 function normName(v) { return String(v || '').replace(/^'/, '').replace(/\s+/g, '').toLowerCase(); }
