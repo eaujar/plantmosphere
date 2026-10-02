@@ -585,7 +585,7 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!panel.hidden) clo
 function validate(){
   const err=document.getElementById("err"), v=id=>document.getElementById(id).value.trim();
   if(!v("f-name")||!v("f-tel")||!v("f-email")||!v("f-addr")){ err.textContent="이름, 전화번호, 이메일, 주소를 모두 적어 주십시오."; return false; }
-  if(!/^[0-9+\-\s()]{9}$/.test(v("f-tel"))){ err.textContent="전화번호를 숫자로 적어 주십시오. (예: 010-0000-0000)"; return false; }
+  if(!/^[0-9+\-\s()]{9,20}$/.test(v("f-tel"))){ err.textContent="전화번호를 숫자로 적어 주십시오. (예: 010-0000-0000)"; return false; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("f-email"))){ err.textContent="이메일 주소를 확인해 주십시오."; return false; }
   if(!document.getElementById("f-agree").checked){ err.textContent="공동구매 안내 및 규정에 동의해 주셔야 신청할 수 있습니다."; return false; }
   if(!document.getElementById("f-privacy").checked){ err.textContent="개인정보 수집·이용에 동의해 주셔야 신청할 수 있습니다."; return false; }
