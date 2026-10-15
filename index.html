@@ -558,7 +558,7 @@ function renderDock(){
   document.getElementById("dockSum").innerHTML = total ? `${nos.length}종 ${total}개체 담음 <span class="mono">${sum?"· "+sum.toLocaleString("ko-KR")+"원":""}${unpriced?" · 미정 "+unpriced+"종 별도":""}</span>` : "아직 담은 개체가 없습니다";
   document.getElementById("openSheet").disabled = !total || isClosed();
   if(isClosed()){
-    document.getElementById("dockSum").textContent = "모집이 마감되었습니다. 문의는 문자 010-8212-3543으로 보내 주십시오.";
+    document.getElementById("dockSum").innerHTML = `모집이 마감되었습니다. 10월 인도네시아 공동구매에 보내 주신 관심에 진심으로 감사드립니다. 건강한 개체 수입으로 보답드리겠습니다.<br><span class="mono">문의 · 문자 010-8212-3543</span>`;
     document.getElementById("openSheet").textContent = "신청마감";
     document.getElementById("openSheet").disabled = true;
     document.getElementById("openEdit").hidden = true;
