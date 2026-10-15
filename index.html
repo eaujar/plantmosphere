@@ -557,7 +557,12 @@ function renderDock(){
   const unpriced=nos.filter(k=>!PRICE_KRW[k]).length; const sum=nos.reduce((a,k)=>a+(PRICE_KRW[k]||0)*cart[k],0);
   document.getElementById("dockSum").innerHTML = total ? `${nos.length}종 ${total}개체 담음 <span class="mono">${sum?"· "+sum.toLocaleString("ko-KR")+"원":""}${unpriced?" · 미정 "+unpriced+"종 별도":""}</span>` : "아직 담은 개체가 없습니다";
   document.getElementById("openSheet").disabled = !total || isClosed();
-  if(isClosed()) document.getElementById("dockSum").textContent = "모집이 마감되었습니다. 문의는 문자 010-8212-3543으로 보내 주십시오.";
+  if(isClosed()){
+    document.getElementById("dockSum").textContent = "모집이 마감되었습니다. 문의는 문자 010-8212-3543으로 보내 주십시오.";
+    document.getElementById("openSheet").textContent = "신청마감";
+    document.getElementById("openSheet").disabled = true;
+    document.getElementById("openEdit").hidden = true;
+  }
 }
 function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden) renderSheet(); }
 
@@ -693,6 +698,9 @@ document.getElementById("goHome").onclick=()=>{
   editMode=false; resetPanel();
   window.scrollTo({top:0, behavior:"smooth"});
 };
+
+/* 마감 시각이 되면 열려 있는 페이지도 바로 마감 상태로 바꿈 */
+if(!isClosed()) setTimeout(()=>{ closeSheet(); renderDock(); }, CLOSE_AT.getTime()-Date.now()+1000);
 
 /* 수정 기능은 시트 코드가 지원할 때만 표시 */
 if(!isClosed()) fetch(ORDER_ENDPOINT).then(r=>r.json()).then(j=>{ if(j&&j.version>=2) document.getElementById("openEdit").hidden=false; }).catch(()=>{});
