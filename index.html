@@ -487,8 +487,8 @@ const SETS = [
   {id:"mystery",k:"Unidentified",title:"동정 챌린지",text:"이름을 모르는 채로 들여와 키우며 함께 알아가는 세트. 자라는 모습을 공유해 주시면 plantmosphere. 기록으로 남깁니다.",items:[58,55,56,57]}
 ];
 
-/* 모집 마감: 2026-10-15 23:59:59 KST → 추가 신청용으로 임시 연장 (Code.gs와 같게) */
-const CLOSE_AT = new Date("2026-10-25T23:59:59+09:00");
+/* 모집 마감: 2026-10-15 23:59:59 KST (10/16 추가 신청 1건 받은 뒤 다시 마감) */
+const CLOSE_AT = new Date("2026-10-15T23:59:59+09:00");
 const isClosed = () => Date.now() > CLOSE_AT.getTime();
 
 /* 장바구니 */
