@@ -3,216 +3,66 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>plantmosphere. 10월 공동구매</title>
-<meta name="description" content="plantmosphere. 10월 공동구매 — 인도네시아 숲에서 온 52종의 식물">
+<title>plantmosphere. 수입 공동구매</title>
+<meta name="description" content="plantmosphere. 수입 공동구매 — 해외 농장에서 직접 들여오는 식물, 회차별 기록">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="plantmosphere.">
-<meta property="og:title" content="plantmosphere. 10월 공동구매">
-<meta property="og:description" content="인도네시아 숲에서 온 52종의 식물 · 10월 15일(목) 23:59까지 · curated by eaujar">
-<meta property="og:image" content="https://eaujar.github.io/plantmosphere/og-logo.jpg">
+<meta property="og:title" content="plantmosphere. 수입 공동구매">
+<meta property="og:description" content="해외 농장에서 직접 들여오는 식물 공동구매 · curated by eaujar">
+<meta property="og:image" content="https://eaujar.com/plantmosphere/og-logo.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="plantmosphere. 로고">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://eaujar.github.io/plantmosphere/og-logo.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<meta name="twitter:image" content="https://eaujar.com/plantmosphere/og-logo.jpg">
 <style>
 :root{
   color-scheme:light;
-  --paper:#FFFFFF; --sheet:#FFFFFF; --ink:#111111; --ink-2:#6B6B6B; --line:#E4E4E4; --soft:#F5F5F4;
-  --green:#8CC63F; --green-ink:#4E7A1A; --blue:#3FA9D6; --blue-soft:#EAF6FB;
+  --paper:#FFFFFF; --ink:#111111; --ink-2:#6B6B6B; --line:#E4E4E4; --soft:#F5F5F4;
+  --green-ink:#4E7A1A;
   --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
 }
 *{box-sizing:border-box}
-body{margin:0}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;padding-inline:16px;padding-block:0 64px;-webkit-font-smoothing:antialiased}
 img{max-width:100%}
-[hidden]{display:none!important}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;padding-inline:16px;padding-block:0 120px;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1180px;margin:0 auto}
-.bin{font-style:italic;font-weight:500;letter-spacing:-.005em}
-.mono{font-variant-numeric:tabular-nums;letter-spacing:.02em}
-button{font:inherit;color:inherit}
+a{color:inherit}
 :focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-
-/* masthead */
-header.mast{padding-block:40px 36px;display:grid;gap:28px;border-bottom:1px solid var(--ink)}
-.logo{display:block;width:min(280px,52%);height:auto}
-.mast-row{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
-h1{font-weight:700;font-size:22.5px;line-height:1.35;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
-h1 em{font-style:normal;color:var(--green-ink)}
-.lede{max-width:60ch;color:var(--ink-2);margin:0}
-.lot{font-size:12px;line-height:1.9;text-align:right;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
-.lot b{color:var(--ink);font-weight:700}
-@media (max-width:720px){.mast-row{grid-template-columns:1fr}.lot{text-align:left}}
-
-/* how it works */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:28px 0 12px}
-.steps div{border-top:2px solid var(--ink);padding-top:10px}
-.steps .k{font-size:11px;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase;font-weight:700}
-.steps p{margin:2px 0 0;font-size:13.5px;color:var(--ink-2)}
-.steps strong{display:block;color:var(--ink);font-weight:700;font-size:15px;margin-top:2px}
-@media (max-width:640px){.steps{grid-template-columns:1fr}}
-
-/* tabs + filters */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);padding-block:14px 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap}
-.tab{border:1px solid var(--ink);background:transparent;padding:7px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:500}
-.tab[aria-selected="true"]{background:var(--ink);color:#fff}
-.filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
-.chip{flex:0 0 auto;border:1px solid var(--line);background:transparent;padding:4px 12px;border-radius:999px;cursor:pointer;font-size:12.5px;color:var(--ink-2)}
-.chip.latin{font-style:italic}
-.chip .n{font-style:normal;opacity:.6;font-size:11px}
-.chip[aria-pressed="true"]{border-color:var(--green-ink);color:var(--green-ink);background:#F2F8EA;font-weight:500}
-.search{display:flex;gap:8px;align-items:center}
-.search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 14px;border-radius:999px;font:inherit}
-.count{font-size:12px;color:var(--ink-2);white-space:nowrap}
-
-/* genus sections */
-.genus{margin-top:40px}
-.genus-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:8px;margin-bottom:16px;border-bottom:1px solid var(--line)}
-.genus-h h2{font-style:italic;font-weight:700;font-size:24px;margin:0;line-height:1.1;letter-spacing:-.01em}
-.genus-h h2.ko{font-style:normal}
-.genus-h .gn{font-size:13px;color:var(--ink-2)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px 20px}
-
-/* specimen card */
-.spec{display:flex;flex-direction:column}
-.spec .ph{aspect-ratio:3/4;max-width:100%;background:var(--soft);position:relative;overflow:hidden;border-radius:6px}
-.spec .ph img{width:100%;height:100%;object-fit:cover;display:block}
-.spec .ph .none{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:var(--ink-2);font-size:13px}
-.spec .no{position:absolute;top:10px;left:10px;background:#fff;color:var(--ink);font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
-.spec .loc{position:absolute;bottom:10px;left:10px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(17,17,17,.72);padding:3px 8px;border-radius:999px}
-.spec.in .ph{outline:2px solid var(--green);outline-offset:-2px}
-.lab{padding:12px 2px 0;display:flex;flex-direction:column;gap:8px;flex:1}
-.lab .bin{font-size:17px;line-height:1.25}
-.lab .ind{font-size:11.5px;color:var(--ink-2)}
-.tags{display:flex;flex-wrap:wrap;gap:4px}
-.tag{font-size:11.5px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2)}
-.tag.blue{color:#1F7FA8;border-color:#BFE3F2;background:var(--blue-soft)}
-.note{font-size:13px;color:var(--ink-2);margin:0}
-.buy{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
-.price{font-size:12.5px;color:var(--ink-2)}
-.price b{color:var(--ink);font-weight:700;font-size:14px}
-.stepper{display:flex;align-items:center;border:1px solid var(--ink);border-radius:999px;overflow:hidden}
-.stepper button{width:32px;height:30px;border:0;background:transparent;cursor:pointer;font-size:16px}
-.stepper span{min-width:22px;text-align:center;font-weight:700}
-.add{border:1px solid var(--ink);background:transparent;color:var(--ink);padding:5px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:500}
-.add:hover{background:var(--ink);color:#fff}
-
-/* sets */
-.sets{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-top:28px}
-.set{border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px}
-.set .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-ink);font-weight:700}
-.set h3{font-size:20px;margin:0;font-weight:700;letter-spacing:-.01em}
-.set p{margin:0;color:var(--ink-2);font-size:14px}
-.set .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.set .thumbs figure{margin:0}
-.set .thumbs img,.set .thumbs .blank{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:var(--soft);border-radius:4px}
-.set .thumbs figcaption{font-style:italic;font-size:11.5px;line-height:1.2;margin-top:4px;color:var(--ink-2)}
-.set .row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:auto}
-
-/* dock + sheet */
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(255,255,255,.96);border-top:1px solid var(--ink);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
-.dock .in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.dock .sum{font-size:14px;font-weight:500}
-.dock .sum .mono{color:var(--ink-2);font-weight:400;font-size:12.5px}
-.dock button{background:var(--ink);color:#fff;border:0;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer}
-.dock button:disabled{opacity:.3;cursor:default}
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20}
-.panel{position:fixed;z-index:21;top:0;right:0;bottom:0;width:min(480px,100%);background:#fff;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
-.panel header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
-.panel header h2{margin:0;font-size:18px}
-.x{border:0;background:transparent;font-size:22px;cursor:pointer;width:36px;height:36px}
-.panel .body{overflow:auto;padding:16px 18px 24px;display:flex;flex-direction:column;gap:18px}
-.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.lines li{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
-.lines img,.lines .blank{width:46px;height:58px;object-fit:cover;background:var(--soft);display:block;border-radius:4px}
-.lines .bin{font-size:15px;line-height:1.2}
-.lines .mono{font-size:11px;color:var(--ink-2)}
-.form{display:grid;gap:12px}
-.form label{display:grid;gap:4px;font-size:13px;color:var(--ink-2)}
-.form input,.form select,.form textarea{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:6px;padding:9px 11px;width:100%}
-.form textarea{min-height:70px;resize:vertical}
-.primary{background:var(--ink);color:#fff;border:0;padding:12px 16px;border-radius:999px;font-weight:700;cursor:pointer;width:100%}
-.hint{font-size:13px;color:var(--ink-2);margin:0}
-.toast{font-size:13px;color:var(--green-ink);min-height:1.2em}
-.err{font-size:13px;color:#C0392B;min-height:1.2em}
-
-/* footer */
-footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:grid;gap:24px}
-.fnotes{display:grid;gap:6px;font-size:13px;line-height:1.7;color:var(--ink-2)}
-.fnotes p{margin:0}
-.fn-k{display:inline-block;margin-right:8px;padding:0 8px;border:1px solid var(--line);border-radius:999px;font-size:11.5px;font-weight:700;color:var(--ink);line-height:1.7}
-.sign{display:flex;flex-direction:column;align-items:flex-end;gap:10px;padding-bottom:12px}
-.sign img{width:72px;height:auto;display:block}
-.sign small{font-size:12px;color:var(--ink-2);letter-spacing:.04em}
-
-.agree{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--ink-2)}
-.agree input{margin-top:4px}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.primary:disabled{opacity:.5;cursor:default}
-
-.rules{margin:28px 0 8px;border:1px solid var(--ink);border-radius:10px;padding:20px 20px 16px}
-.rules h2{margin:0 0 12px;font-size:18px;font-weight:700;letter-spacing:-.01em}
-.keys{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.keys li{display:grid;grid-template-columns:52px 1fr;gap:10px;font-size:14px}
-.keys li b.mono{white-space:nowrap}
-.keys li span{font-size:11.5px;font-weight:700;color:var(--green-ink);letter-spacing:.06em;padding-top:2px}
-.full{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
-.full summary{cursor:pointer;font-weight:700;font-size:14px}
-.rules-body,.rules-box{font-size:13.5px;color:var(--ink)}
-.rules-body h3,.rules-box h3{font-size:14.5px;margin:18px 0 6px}
-.rules-body p,.rules-box p{margin:6px 0;color:var(--ink-2)}
-.rules-body ul,.rules-body ol,.rules-box ul,.rules-box ol{margin:4px 0;padding-left:20px;color:var(--ink-2)}
-.rules-body li,.rules-box li{margin:3px 0}
-.rules-body{max-width:72ch}
-.consent{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:14px}
-.consent-h{margin:0;font-weight:700;font-size:14px}
-.rules-box{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:4px 12px 10px;background:var(--soft)}
-.rules-box h3:first-child{margin-top:10px}
-.pay{margin:0;font-size:13px;background:#F2F8EA;border-radius:6px;padding:10px 12px;color:var(--ink)}
-.form label small{color:var(--ink-2);font-size:12px}
-
-.total{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:4px}
-.total .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-weight:700;font-size:15px}
-.total .row b{font-size:20px;letter-spacing:-.01em}
-.total .sub{font-size:12.5px;color:var(--ink-2)}
-
-.dock-btns{display:flex;gap:8px;align-items:center}
-.linkbtn{background:transparent!important;color:var(--ink)!important;border:1px solid var(--ink)!important;font-weight:500!important}
-.editnote{margin:0;font-size:13px;line-height:1.6;background:#F2F8EA;border-radius:6px;padding:10px 12px;color:var(--ink)}
-@media (max-width:460px){.dock .in{flex-wrap:wrap}.dock-btns{width:100%;justify-content:flex-end}}
-
-.wait{margin:0;font-size:13px;color:var(--ink-2);display:flex;gap:8px;align-items:center}
-.leaf{width:14px;height:14px;border-radius:0 100% 0 100%;background:var(--green);flex:0 0 auto}
-@media (prefers-reduced-motion:no-preference){.leaf{animation:sway 1.2s ease-in-out infinite alternate}@keyframes sway{from{transform:rotate(-25deg)}to{transform:rotate(25deg)}}}
-.done{position:fixed;inset:0;z-index:40;background:#fff;overflow:auto;padding:calc(40px + env(safe-area-inset-top,0px)) 16px calc(40px + env(safe-area-inset-bottom,0px))}
-.done-card{max-width:520px;margin:0 auto;display:grid;gap:18px;text-align:center}
-.done-logo{width:min(240px,60%);height:auto;margin:0 auto;display:block}
-.done-k{margin:12px 0 0;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--green-ink)}
-.done h2{margin:0;font-size:22px;line-height:1.45;letter-spacing:-.01em;text-wrap:balance}
-.done-info{margin:0;display:grid;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);text-align:left}
-.done-info div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:10px 4px;border-top:1px solid var(--line)}
-.done-info div:first-child{border-top:0}
-.done-info dt{font-size:12.5px;color:var(--ink-2)}
-.done-info dd{margin:0;font-weight:700}
-.done-note{margin:0;font-size:13.5px;color:var(--ink-2);text-align:left}
-.quote{margin:8px 0 0;padding:18px 16px;background:var(--soft);border-radius:10px}
-.quote .en{margin:0;font-style:italic;font-size:16px;line-height:1.5}
-.quote .ko{margin:6px 0 0;font-size:13px;color:var(--ink-2)}
-.quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+.wrap{max-width:1180px;margin:0 auto}
 
 .topbar{background:#111;color:#fff;margin-inline:-16px;padding-inline:16px}
-.topbar-in{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-block:22px 16px;flex-wrap:nowrap}
-.topbar-logo{width:min(280px,54%);min-width:0;height:auto;display:block;flex:0 1 auto}
-.slogan{font-size:12.5px;letter-spacing:.08em;color:#fff;opacity:.85;white-space:nowrap;flex:0 0 auto;line-height:1}
+.topbar-in{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-block:22px 16px}
+.topbar-logo{width:min(280px,54%);min-width:0;height:auto;display:block}
+.slogan{font-size:12.5px;letter-spacing:.08em;color:#fff;opacity:.85;white-space:nowrap;line-height:1}
 @media (max-width:520px){.topbar-in{padding-block:16px 12px}.slogan{font-size:clamp(8px,2.1vw,9.5px);letter-spacing:.02em}}
+
+header.mast{padding-block:40px 36px;border-bottom:1px solid var(--ink)}
+h1{font-weight:700;font-size:22.5px;line-height:1.35;letter-spacing:-.02em;margin:0 0 12px}
+.lede{max-width:60ch;color:var(--ink-2);margin:0}
+
+.lots{list-style:none;margin:32px 0 0;padding:0;display:grid;gap:20px}
+.lot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);border:1px solid var(--ink);text-decoration:none}
+.lot .ph{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--ink)}
+.lot .ph img{width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.lot .t{padding:22px 24px;display:flex;flex-direction:column;gap:8px}
+.lot .no{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+.lot h2{margin:0;font-size:20px;line-height:1.35;letter-spacing:-.02em}
+.lot p{margin:0;color:var(--ink-2);font-size:14px}
+.lot dl{margin:auto 0 0;padding-top:14px;display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:4px 22px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.lot dl div{display:flex;flex-direction:column}
+.lot dd{margin:0;color:var(--ink);font-weight:700}
+.lot .go{align-self:flex-end;font-size:13.5px;font-weight:700;border-bottom:1px solid var(--ink)}
+.lot .state{display:inline-block;align-self:flex-start;padding:0 10px;border:1px solid var(--line);border-radius:999px;font-size:11.5px;font-weight:700;line-height:1.9;color:var(--ink-2)}
+.lot:hover h2{color:var(--green-ink)}
+@media (max-width:720px){.lot{grid-template-columns:1fr}.lot dl{grid-template-columns:repeat(2,auto)}}
+
+footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink)}
+.sign{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.sign img{width:72px;height:auto;display:block}
+.sign small{font-size:12px;color:var(--ink-2);letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -225,509 +75,43 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--ink);display:
 </div>
 <div class="wrap">
   <header class="mast">
-    <div class="mast-row">
-      <div>
-        <h1>인도네시아 숲에서 온<br><em>52종</em>의 식물, 10월 공동구매</h1>
-        <p class="lede">인도네시아 숲에서 온 52종의 식물을 큐레이션합니다.<br>수마트라와 보르네오, 파푸아를 떠나 먼 길을 건너온 숲의 한 조각이,<br>당신의 비바리움에서 새로운 계절을 맞이하길 기대해봅니다.. :)</p>
-      </div>
-      <div class="lot">Lot <b>2026-10</b><br>Until <b>10.15 Thu</b><br>Species <b>52</b><br>Origin <b>Indonesia</b></div>
-    </div>
+    <h1>plantmosphere. 수입 공동구매</h1>
+    <p class="lede">해외 농장에서 직접 들여오는 식물 공동구매입니다.<br>회차마다 오자르가 직접 키워 보고 싶은 식물을 골라 소개합니다.</p>
   </header>
 
-  <section class="steps" aria-label="공동구매 진행 순서">
-    <div><span class="k">Step 1</span><strong>둘러보고 담기</strong><p>개체 카드나 세트 구성을 담습니다.</p></div>
-    <div><span class="k">Step 2</span><strong>신청하기</strong><p>아래 바에서 신청서를 열고 정보를 입력한 뒤 규정에 동의합니다.</p></div>
-    <div><span class="k">Step 3</span><strong>24시간 안에 입금</strong><p>확정 안내를 받으면 신청자 이름으로 입금합니다.</p></div>
-  </section>
-
-
-  <section class="rules" id="rules" aria-labelledby="rules-h">
-    <h2 id="rules-h">공동구매 안내 및 규정</h2>
-    <ul class="keys">
-      <li><span>모집</span><div><b>2026년 10월 15일(목) 23:59까지</b></div></li>
-      <li><span>입금</span><div>확정 안내 후 <b>24시간 이내</b> · 카카오뱅크 <b class="mono">3333-03-4776150</b> · <b>신청자와 같은 이름으로</b></div></li>
-      <li><span>일정</span><div>모집 마감(10/15) 후 <b>약 한 달</b>, <b>11월 중순</b> 도착 예정</div></li>
-      <li><span>전달</span><div>순화 없이 흙 없는 베어루트 상태 그대로</div></li>
-      <li><span>사착</span><div>택배 받은 당일 문자 알림 → 다음 공구 때 같은 개체 또는 공구가 50% 환불</div></li>
-      <li><span>문의</span><div>문자 <b class="mono">010-8212-3543</b></div></li>
-      <li><span>취소</span><div>해외 발주 전 전액 환불 · 발주 후 취소 불가</div></li>
-    </ul>
-    <details class="full">
-      <summary>규정 전체 보기</summary>
-      <div class="rules-body" id="rulesBody">
-<p>숲에서 온 식물을 여러분의 비바리움까지 안전하게 전하기 위해 몇 가지 약속을 정했습니다. 신청 전에 꼭 읽어 주십시오 :)</p>
-<h3>1. 신청과 확정</h3>
-<ul>
-<li>신청은 공동구매 페이지의 <b>신청</b> 버튼으로 접수되며, 접수번호가 발급됩니다.</li>
-<li>모집 기간은 <b>2026년 10월 15일(목) 23시 59분까지</b>입니다. 마감 후에는 신청과 수정을 받지 않습니다.</li>
-<li>신청은 수요 조사를 겸하며, 신청만으로 구매가 확정되지는 않습니다.</li>
-<li>확정 안내를 받기 전까지는 페이지 하단의 <b>신청 내용 수정</b>으로 신청 내용을 바꿀 수 있습니다. 처음 신청할 때와 같은 이름과 전화번호를 입력해야 하며, 이전 신청은 새 내용으로 대체됩니다. 확정 안내 이후의 변경은 문자로 문의해 주십시오.</li>
-<li>신청 접수 시각 순서대로 확정합니다. 종별 최소 수량에 미치지 못한 개체는 진행하지 않을 수 있습니다.</li>
-<li>확정되면 입력하신 전화번호(문자) 또는 이메일로 확정 개체와 금액을 안내드립니다.</li>
-</ul>
-<h3>2. 입금</h3>
-<ul>
-<li>확정 안내를 받은 후 <b>24시간 이내</b>에 입금해 주십시오.</li>
-<li>24시간이 지나면 자동으로 취소되며, 해당 개체는 다음 신청자에게 넘어갑니다.</li>
-<li>입금 계좌: <b>카카오뱅크 3333-03-4776150</b></li>
-<li><b>신청자와 같은 이름으로 입금해 주십시오.</b> 이름이 다르면 입금 확인이 늦어지거나 확정되지 않을 수 있습니다.</li>
-<li>입금이 확인되면 최종 확정됩니다.</li>
-</ul>
-<h3>3. 가격과 비용</h3>
-<ul>
-<li>공구가에는 개체 가격과 함께 식물검역증명서, 항공 운송, 통관, 관부가세 등 수입에 드는 비용이 포함되어 있습니다.</li>
-<li>확정 안내 이후 환율이나 운송비가 바뀌어도 추가로 청구하지 않습니다.</li>
-<li>식물은 부가가치세 면세 품목으로, 계산서는 발급하지 않습니다.</li>
-</ul>
-<h3>4. 수입과 검역</h3>
-<ul>
-<li>모든 개체는 정식 식물검역을 거쳐 들어옵니다. 식물방역법상 흙은 수입할 수 없어 <b>흙 없이 뿌리만 있는 상태(베어루트)</b>로 도착합니다.</li>
-<li>별도의 순화 과정 없이 <b>입고된 상태 그대로</b> 전달합니다. 받으신 후의 식재와 관리는 구매자께 맡겨집니다.</li>
-<li>검역에서 폐기·반송되거나 공급처에서 누락된 개체는 <b>해당 개체 금액을 전액 환불</b>합니다.</li>
-<li>수입에는 모집 마감일로부터 <b>약 한 달</b>이 걸리며, <b>11월 중순</b> 도착을 예정하고 있습니다.</li>
-<li>항공편이나 검역 일정으로 입고가 늦어질 수 있습니다. 지연되면 바로 알려드리며, 이에 대한 별도 보상은 없습니다.</li>
-</ul>
-<h3>5. 수령</h3>
-<ul>
-<li>신청 시 입력하신 주소로 보내드립니다. 받으시는 즉시 상태를 확인해 주십시오. 상자를 여는 과정을 사진이나 영상으로 남겨 두시길 권합니다.</li>
-<li>직접 만나 전달하는 경우에는 그 자리에서 함께 상태를 확인하며, 이때 이상이 없던 개체는 이후 사착으로 보지 않습니다.</li>
-<li>주소 오기재, 연락 두절 등 구매자 사정으로 생긴 피해는 보상하지 않습니다.</li>
-</ul>
-<h3>6. 사착 보상</h3>
-<p><b>사착이란?</b> 받았을 때 줄기나 뿌리 전체가 물러 있거나, 생장점이 괴사했거나, 잎이 모두 녹아 회복이 어려운 상태를 말합니다.</p>
-<p><b>정상 범위로 보는 경우:</b> 운송 스트레스로 잎 몇 장이 노랗게 되거나 떨어짐, 잎끝 마름, 포장 과정의 눌림이나 휨. 베어루트로 긴 여정을 거친 식물에게는 흔한 일이며 대부분 회복됩니다.</p>
-<p><b>신청 방법:</b> 택배를 <b>받은 당일</b>에 사진이나 영상과 함께 <b>문자(010-8212-3543)</b>로 알려 주십시오.</p>
-<p><b>보상:</b> 둘 중 하나를 골라 주십시오.</p>
-<ol>
-<li><b>다음 공구 때 같은 개체로 보상</b></li>
-<li><b>해당 개체 공구가의 50% 환불</b></li>
-</ol>
-<ul>
-<li>다음 공구에 같은 개체가 없으면 50% 환불로 대신합니다.</li>
-<li>여러 개체 중 일부만 해당하면 그 개체만 보상하며, 배송비는 보상 금액에 포함되지 않습니다.</li>
-</ul>
-<h3>7. 취소와 환불</h3>
-<ul>
-<li>해외 발주 전에는 취소하실 수 있으며, 전액 환불됩니다.</li>
-<li>해외 발주 이후에는 취소할 수 없습니다.</li>
-<li>살아 있는 식물은 시간이 지나면 다시 판매하기 어려운 특성이 있어, 받으신 후 단순 변심에 따른 교환·환불은 할 수 없습니다.</li>
-<li>공구가 진행되지 못하면 입금액을 3영업일 이내에 전액 환불합니다.</li>
-<li>환불은 입금하신 계좌로 해 드립니다.</li>
-</ul>
-<h3>8. 보상하지 않는 경우</h3>
-<ul>
-<li>5·6항의 정상 범위에 해당하는 상태 변화</li>
-<li>받으신 후 관리 과정에서 상태가 나빠진 경우</li>
-<li>사진과 크기나 잎 색이 다른 경우 (자연물이라 빛과 환경에 따라 달라집니다)</li>
-<li>야생 개체라 작은 벌레나 달팽이 알 등이 함께 온 경우 (받으신 후 따로 두고 지켜보시길 권합니다)</li>
-<li>동정 챌린지 등 미동정 개체가 예상과 다른 종으로 밝혀진 경우</li>
-<li>받은 당일이 지나 사착을 알려 주신 경우</li>
-</ul>
-<h3>9. 개인정보</h3>
-<ul>
-<li>이름, 전화번호, 이메일, 주소는 공구 진행, 연락, 배송을 위해서만 사용합니다.</li>
-<li>공구가 끝나고 3개월이 지나면 삭제합니다.</li>
-<li>받으신 식물의 사진을 기록으로 소개할 때는 따로 동의를 구합니다.</li>
-</ul>
-<h3>10. 기타</h3>
-<ul>
-<li>수출 금지, 천재지변 등 불가항력으로 진행할 수 없는 개체는 전액 환불하며, 그 외 책임은 지지 않습니다.</li>
-<li>문의는 문자 <b>010-8212-3543</b>으로 보내 주십시오.</li>
-<li>규정에 없는 상황은 서로 이야기하며 정합니다. 식물이 사람을 잇는 일이기 때문입니다 :)</li>
-</ul>
-<p>— plantmosphere. by eaujar</p>
-      </div>
-    </details>
-  </section>
-
-  <div class="bar">
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" id="tab-each" aria-selected="true">개체별로 보기</button>
-      <button class="tab" role="tab" id="tab-sets" aria-selected="false">세트 구성</button>
-    </div>
-    <div id="filterWrap">
-      <div class="filters" id="filters" aria-label="속명으로 거르기"></div>
-    </div>
-    <div class="search" id="searchWrap">
-      <input id="q" type="search" placeholder="학명이나 속 이름으로 찾기 (예: Piper, blue)" aria-label="찾기">
-      <span class="count" id="count"></span>
-    </div>
-  </div>
-
-  <main id="each"></main>
-  <main id="sets" hidden></main>
+  <ul class="lots">
+    <li>
+      <a class="lot" href="01/">
+        <div class="ph" aria-hidden="true">
+          <img src="01/img/01.jpg" alt="" loading="lazy">
+          <img src="01/img/12.jpg" alt="" loading="lazy">
+          <img src="01/img/24.jpg" alt="" loading="lazy">
+          <img src="01/img/40.jpg" alt="" loading="lazy">
+        </div>
+        <div class="t">
+          <span class="no">Lot.01</span>
+          <span class="state">모집 마감</span>
+          <h2>인도네시아 숲에서 온 52종의 식물</h2>
+          <p>수마트라와 보르네오, 파푸아를 떠나 먼 길을 건너온 숲의 한 조각.</p>
+          <dl>
+            <div><dt>Lot</dt><dd>2026-10</dd></div>
+            <div><dt>Species</dt><dd>52</dd></div>
+            <div><dt>Origin</dt><dd>Indonesia</dd></div>
+            <div><dt>Arrival</dt><dd>Nov</dd></div>
+          </dl>
+          <span class="go">공구 페이지 보기 →</span>
+        </div>
+      </a>
+    </li>
+  </ul>
 
   <footer>
-    <div class="fnotes">
-      <p><b class="fn-k">공구 안내</b>공구가에는 검역·운송·통관 비용이 포함되어 있습니다. 신청은 확정 전 수요 조사를 겸하며, 최소 수량에 못 미친 개체는 입고하지 않을 수 있습니다.</p>
-      <p><b class="fn-k">개체 구분</b>같은 이름의 개체가 여러 장인 경우(개체 A·B·C) 사진 속 개체가 서로 다릅니다. 원하는 개체를 골라 담아 주십시오.</p>
-    </div>
     <div class="sign">
       <small>© 2026 copyrights reserved by eaujar</small>
       <img src="eaujar.png" alt="eaujar" width="565" height="300">
     </div>
   </footer>
 </div>
-
-<div class="dock" role="region" aria-label="담은 개체">
-  <div class="in">
-    <div class="sum" id="dockSum">아직 담은 개체가 없습니다</div>
-    <div class="dock-btns"><button id="openEdit" class="linkbtn" hidden>신청 내용 수정</button><button id="openSheet" disabled>신청하기</button></div>
-  </div>
-</div>
-
-<div class="scrim" id="scrim" hidden></div>
-<aside class="panel" id="panel" hidden aria-label="신청서">
-  <header><h2 id="panelTitle">공동구매 신청서</h2><button class="x" id="closeSheet" aria-label="닫기">×</button></header>
-  <div class="body">
-    <p class="editnote" id="editNote" hidden><b>신청 내용 수정</b><br>처음 신청할 때와 같은 <b>이름과 전화번호</b>를 입력해 주십시오. 이전 신청은 아래 내용으로 대체됩니다. 개체를 바꾸려면 창을 닫고 다시 담은 뒤 수정해 주십시오. 확정 안내를 받은 신청은 문자(010-8212-3543)로 문의해 주십시오.</p>
-    <ul class="lines" id="lines"></ul>
-    <div class="total" id="total" aria-live="polite"></div>
-    <div class="form">
-      <label>이름 <small>(입금자명과 같아야 합니다)</small><input id="f-name" autocomplete="name" maxlength="40" required></label>
-      <label>전화번호<input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="20" required></label>
-      <label>이메일<input id="f-email" type="email" autocomplete="email" placeholder="name@example.com" maxlength="80" required></label>
-      <label>주소<textarea id="f-addr" autocomplete="street-address" placeholder="우편번호, 도로명 주소, 상세 주소" maxlength="200" required></textarea></label>
-    </div>
-    <p class="err" id="err"></p>
-    <div class="consent">
-      <p class="consent-h">공동구매 안내 및 규정</p>
-      <div class="rules-box" id="rulesBox" tabindex="0" aria-label="공동구매 규정 전문"></div>
-      <label class="agree"><input type="checkbox" id="f-agree"> 공동구매 안내 및 규정을 모두 읽었고 동의합니다. <b>(필수)</b></label>
-      <label class="agree"><input type="checkbox" id="f-privacy"> 공동구매 진행·연락·배송을 위한 개인정보(이름, 전화번호, 이메일, 주소) 수집·이용에 동의합니다. 공구 종료 3개월 후 삭제됩니다. <b>(필수)</b></label>
-      <p class="pay">입금 계좌 <b>카카오뱅크 3333-03-4776150</b><br>확정 안내를 받은 뒤 24시간 이내에 <b>신청자와 같은 이름으로</b> 입금해 주십시오.</p>
-    </div>
-    <input type="text" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
-    <button class="primary" id="submit">신청</button>
-    <p class="wait" id="wait" hidden aria-live="polite"><span class="leaf" aria-hidden="true"></span>접수 중입니다. 숲에서 답장이 오기까지 10~20초 정도 걸립니다. 창을 닫지 말아 주십시오.</p>
-    <p class="toast" id="toast" aria-live="polite"></p>
-    <p class="hint" id="dmHint">신청을 누르면 바로 접수됩니다. 확정되면 문자 또는 이메일로 안내드리겠습니다 :)</p>
-  </div>
-</aside>
-
-<div class="done" id="done" hidden role="dialog" aria-modal="true" aria-labelledby="doneTitle">
-  <div class="done-card">
-    <img class="done-logo" src="plantmosphere.png" alt="plantmosphere." width="1400" height="150">
-    <p class="done-k" id="doneKicker">신청 완료</p>
-    <h2 id="doneTitle">숲에서 온 식물이<br>당신의 비바리움으로 떠날 준비를 시작합니다.</h2>
-    <dl class="done-info">
-      <div><dt>접수번호</dt><dd class="mono" id="doneId"></dd></div>
-      <div><dt>최종 입금액</dt><dd class="mono" id="doneSum"></dd></div>
-      <div><dt>입금 계좌</dt><dd>카카오뱅크 <span class="mono">3333-03-4776150</span></dd></div>
-      <div><dt>입금자명</dt><dd id="doneName"></dd></div>
-    </dl>
-    <p class="done-note">식물은 모집 마감 후 약 한 달, 11월 중순 도착 예정입니다. 확정 안내를 문자 또는 이메일로 받으시면 <b>24시간 이내</b>에 <b>신청자와 같은 이름으로</b> 입금해 주십시오. 문의는 문자 010-8212-3543으로 보내 주십시오.</p>
-    <blockquote class="quote" id="doneQuote"></blockquote>
-    <button class="primary" id="goHome">메인으로 돌아가기</button>
-  </div>
-</div>
-
-<script>
-/* 신청 접수 주소: Apps Script 웹 앱 URL */
-const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbzq5z-Br6cjBUzGommRCevPvYrwSFBijHfHMKnoKLCT8dcegSuZgVYtcBO4aFAMUOIS/exec";
-
-/* 공구가(원): 시트 가격(USD) × 1,360원(2026-09-29 서울외국환중개 매매기준율) × 4, 1,000원 단위 올림. 시트에 가격이 없는 개체는 $15로 가정 */
-const PRICE_KRW = {1:82000,2:82000,3:77000,4:82000,6:82000,7:77000,9:55000,10:82000,11:55000,12:55000,13:55000,14:55000,15:77000,16:82000,17:71000,19:82000,21:82000,22:77000,23:77000,24:82000,25:77000,26:77000,27:55000,28:82000,29:55000,31:66000,32:82000,33:71000,34:55000,36:82000,37:71000,38:71000,39:77000,40:66000,41:82000,42:77000,43:82000,44:82000,45:82000,46:66000,47:55000,48:55000,49:77000,50:71000,51:55000,52:55000,53:55000,54:55000,55:55000,56:55000,57:55000,58:136000};
-
-const PLANTS = [{"no":1,"genus":"Amorphophallus","name":"Amorphophallus pendulus","img":"img/01.jpg"},{"no":2,"genus":"Ardisia","name":"Ardisia sp","img":"img/02.jpg"},{"no":3,"genus":"Ardisia","name":"Ardisia sp blue","img":"img/03.jpg"},{"no":4,"genus":"Begonia","name":"Begonia new species from langkat sumatra","img":"img/04.jpg"},{"no":6,"genus":"Codonoboea","name":"Codonoboea","img":"img/06.jpg"},{"no":7,"genus":"Codonoboea","name":"Codonoboea sp","img":"img/07.jpg"},{"no":9,"genus":"Davallia","name":"Davalia sp","img":"img/09.jpg"},{"no":10,"genus":"Dendroconche","name":"Dendroconche annabelle/microsorum","img":"img/10.jpg"},{"no":11,"genus":"Dioscorea","name":"Discorea sp","img":"img/11.jpg"},{"no":12,"genus":"Diplazium","name":"Diplazium sp","img":"img/12.jpg"},{"no":13,"genus":"Diplazium","name":"Diplazium sp","img":"img/13.jpg"},{"no":14,"genus":"Diplazium","name":"Diplazium sp","img":"img/14.jpg"},{"no":15,"genus":"Elatostema","name":"Elatostemma new sp papua","img":"img/15.jpg"},{"no":16,"genus":"Ficus","name":"Ficus sp","img":"img/16.jpg"},{"no":17,"genus":"Ficus","name":"Picus sp sumatra","img":"img/17.jpg"},{"no":19,"genus":"Homalomena","name":"Homalomena aaf hasei","img":"img/19.jpg"},{"no":21,"genus":"Homalomena","name":"Homalomena hasei","img":"img/21.jpg"},{"no":22,"genus":"Homalomena","name":"Homalomena mini dolpin silver","img":"img/22.jpg"},{"no":23,"genus":"Homalomena","name":"Homalomena rugosum","img":"img/23.jpg"},{"no":24,"genus":"Homalomena","name":"Homalomena sp hairy","img":"img/24.jpg"},{"no":25,"genus":"Homalomena","name":"Homalomena sp sumatra","img":"img/25.jpg"},{"no":26,"genus":"Homalomena","name":"Homalomena sp sumatra","img":"img/26.jpg"},{"no":27,"genus":"Hymenophyllum","name":"Hymenophyllum","img":"img/27.jpg"},{"no":28,"genus":"Lindsaea","name":"Lindsaea sp blue","img":"img/28.jpg"},{"no":29,"genus":"Lindsaea","name":"Lindsaea sp sumatra","img":"img/29.jpg"},{"no":31,"genus":"Mapania","name":"Mapania sp","img":"img/31.jpg"},{"no":32,"genus":"Mapania","name":"Mapania sp papua","img":"img/32.jpg"},{"no":33,"genus":"Microsorum","name":"Microsorum sp","img":"img/33.jpg"},{"no":34,"genus":"Microsorum","name":"Microsorum sp blue","img":"img/34.jpg"},{"no":36,"genus":"Pinanga","name":"Pinanga disticha","img":"img/36.jpg"},{"no":37,"genus":"Piper","name":"Piper sp","img":"img/37.jpg"},{"no":38,"genus":"Piper","name":"Piper sp borneo","img":"img/38.jpg"},{"no":39,"genus":"Piper","name":"Piper sp papua","img":"img/39.jpg"},{"no":40,"genus":"Piper","name":"Piper sp Sulawesi","img":"img/40.jpg"},{"no":41,"genus":"Piper","name":"Piper sp sumatra","img":"img/41.jpg"},{"no":42,"genus":"Piper","name":"Piper sp timika","img":"img/42.jpg"},{"no":43,"genus":"Sarcopyramis","name":"Sarcopyramis green sp","img":"img/43.jpg"},{"no":44,"genus":"Sarcopyramis","name":"Sarcopyramis sp aceh","img":"img/44.jpg"},{"no":45,"genus":"Sarcopyramis","name":"Sarcopyramis sp blue","img":"img/45.jpg"},{"no":46,"genus":"Sarcopyramis","name":"Sarcopyramis sp kalimantan","img":"img/46.jpg"},{"no":47,"genus":"Selaginella","name":"Selaginella sp","img":"img/47.jpg"},{"no":48,"genus":"Selaginella","name":"Selaginella sp jambi","img":"img/48.jpg"},{"no":49,"genus":"Selliguea","name":"Selliguea sp sumatra","img":"img/49.jpg"},{"no":50,"genus":"Sonerila","name":"Sonerila sp borneo","img":"img/50.jpg"},{"no":51,"genus":"Sonerila","name":"Sonerila sp dragon","img":"img/51.jpg"},{"no":52,"genus":"Sonerila","name":"Sonerila sp java","img":"img/52.jpg"},{"no":53,"genus":"Teratophyllum","name":"Teratophylum sp","img":"img/53.jpg"},{"no":54,"genus":"Teratophyllum","name":"Teratophylum sp borneo","img":"img/54.jpg"},{"no":55,"genus":"미동정 양치","name":"Fern sp","img":"img/55.jpg"},{"no":56,"genus":"미동정 양치","name":"Fern sp","img":"img/56.jpg"},{"no":57,"genus":"미동정 양치","name":"Fern sp sumatra","img":"img/57.jpg"},{"no":58,"genus":"미확인","name":"Plant no id","img":"img/58.jpg"}];
-
-/* 속별 비바리움 메모: [한국어 이름, 자리 태그, 한 줄 메모] */
-const GENUS = {
-  "Amorphophallus":["곤약속","바닥","덩이줄기로 자라며 휴면기가 있습니다. 배수가 잘 되는 용토에 심어 주십시오."],
-  "Ardisia":["자금우속","바닥·중경","천천히 자라는 소형 관목. 높은 습도와 은은한 빛을 좋아합니다."],
-  "Begonia":["베고니아속","바닥","고습 테라리움 향 베고니아. 잎에 물이 고이지 않게 통풍을 챙겨 주십시오."],
-  "Codonoboea":["코도노보에아속","바닥·바위","게스네리아과. 이끼 낀 바위틈처럼 습하고 어두운 자리에서 잘 자랍니다."],
-  "Davallia":["넉줄고사리속","벽면·유목","뿌리줄기가 표면을 기어가는 착생 양치. 유목이나 코르크에 올려 주십시오."],
-  "Dendroconche":["덴드로콘케속","벽면·유목","잎이 비늘처럼 겹쳐 붙는 착생 양치입니다."],
-  "Dioscorea":["마속","덩굴","잎맥 무늬가 선명한 덩굴. 타고 오를 구조물을 마련해 주십시오."],
-  "Diplazium":["섬고사리속","바닥","숲 바닥 양치. 습한 뒷배경을 풍성하게 채워 줍니다."],
-  "Elatostema":["물통이과 엘라토스테마속","바닥·수변","아주 높은 습도와 낮은 빛을 좋아하는 숲 바닥 식물입니다."],
-  "Ficus":["무화과나무속","벽면","벽을 타고 붙어 자라는 소형 덩굴 피쿠스입니다."],
-  "Freycinetia":["프레이시네티아속","벽면·덩굴","판다누스과 덩굴. 기근으로 벽과 유목을 타고 오릅니다."],
-  "Homalomena":["호말로메나속","바닥·중경","천남성과. 잎 질감과 광택이 다양하고 고습에서 잘 자랍니다."],
-  "Hymenophyllum":["처녀이끼속","벽면·수변","잎이 한 겹 세포로 된 필미 펀. 최고 습도와 통풍, 낮은 빛이 필요한 상급 개체입니다."],
-  "Lindsaea":["고사리아재비속","바닥","빛 각도에 따라 푸른 광택이 도는 양치입니다."],
-  "Mapania":["마파니아속","바닥·수변","사초과. 수변이나 앞쪽 바닥에 세로 선을 만들어 줍니다."],
-  "Microsorum":["미크로소룸속","벽면·유목","착생 양치. 벽면이나 유목에 붙여 키우기 좋습니다."],
-  "Pinanga":["피낭가속","중경","얼룩무늬 잎의 소형 야자 실생. 천천히 키워 보는 재미가 있습니다."],
-  "Piper":["후추속","벽면·바닥","기어가며 자라는 후추 덩굴. 산지마다 잎 무늬와 색이 다릅니다."],
-  "Sarcopyramis":["사르코피라미스속","바닥","멜라스토마과 소형종. 고습 바닥에 보석처럼 박힙니다."],
-  "Selaginella":["부처손속","바닥","바닥을 덮어 주는 바위손 무리. 이끼와 잘 어울립니다."],
-  "Selliguea":["셀리구에아속","벽면·유목","착생 양치. 바위나 벽면에 붙여 키웁니다."],
-  "Sonerila":["소네릴라속","바닥","멜라스토마과. 은빛 점무늬 잎이 매력인 고습·저광 식물입니다."],
-  "Teratophyllum":["테라토필룸속","벽면","나무를 타고 오르는 양치. 어린 잎에 푸른 빛이 돌기도 합니다."],
-  "미동정 양치":["아직 이름을 모르는 양치","동정 챌린지","키우며 포자와 잎 모양으로 함께 이름을 찾아갑니다."],
-  "미확인":["정체불명","동정 챌린지","꽃이 피거나 자라면서 정체가 드러나는 개체입니다. 기록을 공유해 주십시오."]
-};
-
-/* 산지 추출 */
-const PLACES = [
-  ["aceh","Sumatra","Aceh"],["jambi","Sumatra","Jambi"],["langkat","Sumatra","Langkat"],["sumatra","Sumatra",""],
-  ["kalimantan","Borneo","Kalimantan"],["borneo","Borneo",""],
-  ["timika","Papua","Timika"],["papua","Papua",""],["sulawesi","Sulawesi",""],["java","Java",""]
-];
-function place(name){
-  const n=name.toLowerCase();
-  for(const [k,isl,sub] of PLACES){ if(n.includes(k)) return {isl, sub}; }
-  return null;
-}
-
-/* 같은 이름 개체 A/B/C */
-const seen={};
-PLANTS.forEach(p=>{ const k=p.name.toLowerCase(); (seen[k]=seen[k]||[]).push(p); });
-Object.values(seen).forEach(arr=>{ if(arr.length>1) arr.forEach((p,i)=>p.ind="개체 "+String.fromCharCode(65+i)); });
-PLANTS.forEach(p=>{ p.place=place(p.name); p.blue=/blue/i.test(p.name); });
-const byNo = Object.fromEntries(PLANTS.map(p=>[p.no,p]));
-
-const SETS = [
-  {id:"blue",k:"Iridescent",title:"푸른 잎 컬렉션",text:"빛 각도에 따라 청록으로 반짝이는 잎만 모았습니다. 어두운 비바리움에서 가장 먼저 눈에 들어오는 조합입니다.",items:[3,28,34,45]},
-  {id:"sumatra",k:"Sumatra · forest floor",title:"수마트라 숲 바닥",text:"아체와 잠비의 습한 숲 바닥을 옮겨 온 구성. 부처손으로 바닥을 덮고 사이사이 작은 잎들을 심어 보십시오.",items:[44,48,29,25]},
-  {id:"borneo",k:"Borneo · wall & floor",title:"보르네오 벽면과 바닥",text:"벽을 타는 양치와 후추 덩굴, 바닥의 멜라스토마. 세로 공간이 있는 비바리움에 어울립니다.",items:[54,38,50,46]},
-  {id:"papua",k:"Papua · low light",title:"파푸아 저광량",text:"빛이 적게 드는 파푸아 숲 아래층 식물들. 조명이 약한 자리나 뒤쪽 배경을 채우기 좋습니다.",items:[39,42,32,15]},
-  {id:"mystery",k:"Unidentified",title:"동정 챌린지",text:"이름을 모르는 채로 들여와 키우며 함께 알아가는 세트. 자라는 모습을 공유해 주시면 plantmosphere. 기록으로 남깁니다.",items:[58,55,56,57]}
-];
-
-/* 모집 마감: 2026-10-15 23:59:59 KST (10/16 추가 신청 1건 받은 뒤 다시 마감) */
-const CLOSE_AT = new Date("2026-10-15T23:59:59+09:00");
-const isClosed = () => Date.now() > CLOSE_AT.getTime();
-
-/* 장바구니 */
-function cleanCart(c){
-  const out={};
-  if(c && typeof c==="object") Object.keys(c).forEach(k=>{ const n=Number(k), q=Math.floor(Number(c[k])); if(byNo[n] && q>0) out[n]=Math.min(q,20); });
-  return out;
-}
-let cart = {};
-try{ cart = cleanCart(JSON.parse(localStorage.getItem("pm-cart")||"{}")); }catch(e){ cart={}; }
-function save(){ try{ localStorage.setItem("pm-cart", JSON.stringify(cart)); }catch(e){} }
-const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const priceText = no => PRICE_KRW[no] ? "<b>"+PRICE_KRW[no].toLocaleString("ko-KR")+"원</b>" : "<b>미정</b>";
-
-function imgTag(p, cls){
-  return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : `<div class="${cls||"blank"}"></div>`;
-}
-function buyHtml(p){
-  const q = cart[p.no]||0;
-  return q ? `<div class="stepper" aria-label="수량"><button data-dec="${p.no}" aria-label="하나 빼기">−</button><span>${q}</span><button data-inc="${p.no}" aria-label="하나 더">+</button></div>`
-           : `<button class="add" data-inc="${p.no}">담기</button>`;
-}
-function card(p){
-  const g = GENUS[p.genus]||["","",""];
-  const loc = p.place ? `<span class="loc">${esc(p.place.isl)}${p.place.sub?" · "+esc(p.place.sub):""}</span>` : "";
-  const tags = g[1].split("·").map(t=>`<span class="tag">${esc(t.trim())}</span>`).join("") + (p.blue?`<span class="tag blue">푸른 광택</span>`:"");
-  return `<article class="spec${cart[p.no]?" in":""}" data-no="${p.no}">
-    <div class="ph">${p.img?imgTag(p):`<div class="none">사진 준비 중<br>입고 후 실물 사진으로 올립니다</div>`}<span class="no mono">No.${String(p.no).padStart(2,"0")}</span>${loc}</div>
-    <div class="lab">
-      <div><div class="bin">${esc(p.name)}</div>${p.ind?`<div class="ind">${p.ind}</div>`:""}</div>
-      <div class="tags">${tags}</div>
-      <div class="buy"><span class="price">${priceText(p.no)}</span><span class="b">${buyHtml(p)}</span></div>
-    </div></article>`;
-}
-
-/* 필터 */
-const GENERA = [...new Set(PLANTS.map(p=>p.genus))];
-const ISLES = ["전체", ...GENERA];
-let isle="전체", q="";
-document.getElementById("filters").innerHTML = ISLES.map(i=>{const n=i==="전체"?PLANTS.length:PLANTS.filter(p=>p.genus===i).length; const ko=/[가-힣]/.test(i); return `<button class="chip${ko||i==="전체"?"":" latin"}" aria-pressed="${i==="전체"}" data-isle="${esc(i)}">${esc(i)} <span class="n">${n}</span></button>`;}).join("");
-function match(p){
-  if(isle!=="전체" && p.genus!==isle) return false;
-  if(q){ const s=(p.name+" "+p.genus+" "+(GENUS[p.genus]||[""])[0]).toLowerCase(); if(!s.includes(q)) return false; }
-  return true;
-}
-function renderEach(){
-  const list = PLANTS.filter(match);
-  const groups = [];
-  list.forEach(p=>{ let g=groups.find(x=>x.genus===p.genus); if(!g){g={genus:p.genus,items:[]};groups.push(g);} g.items.push(p); });
-  document.getElementById("count").textContent = list.length+" / "+PLANTS.length+"종";
-  document.getElementById("each").innerHTML = groups.length ? groups.map(g=>{
-    const info=GENUS[g.genus]||[""]; const ko=/[가-힣]/.test(g.genus);
-    return `<section class="genus"><div class="genus-h"><h2 class="${ko?"ko":""}">${esc(g.genus)}</h2><span class="gn">${ko?"":esc(info[0])+" · "}${g.items.length}개체</span></div><div class="grid">${g.items.map(card).join("")}</div></section>`;
-  }).join("") : `<p class="hint" style="margin-top:28px">조건에 맞는 개체가 없습니다. 속명이나 검색어를 바꿔 보십시오.</p>`;
-}
-function renderSets(){
-  document.getElementById("sets").innerHTML = `<div class="sets">${SETS.map(s=>{
-    const ps=s.items.map(n=>byNo[n]); const all=ps.every(p=>cart[p.no]);
-    return `<article class="set"><span class="k">${esc(s.k)}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>
-      <div class="thumbs">${ps.map(p=>`<figure>${imgTag(p)}<figcaption>${esc(p.name)}</figcaption></figure>`).join("")}</div>
-      <div class="row"><span class="price mono">No.${ps.map(p=>String(p.no).padStart(2,"0")).join(" · ")}</span><button class="add" data-set="${s.id}">${all?"세트 모두 담김":"세트로 담기"}</button></div></article>`;
-  }).join("")}</div>`;
-}
-function renderDock(){
-  const nos=Object.keys(cart).filter(k=>cart[k]>0); const total=nos.reduce((a,k)=>a+cart[k],0);
-  const unpriced=nos.filter(k=>!PRICE_KRW[k]).length; const sum=nos.reduce((a,k)=>a+(PRICE_KRW[k]||0)*cart[k],0);
-  document.getElementById("dockSum").innerHTML = total ? `${nos.length}종 ${total}개체 담음 <span class="mono">${sum?"· "+sum.toLocaleString("ko-KR")+"원":""}${unpriced?" · 미정 "+unpriced+"종 별도":""}</span>` : "아직 담은 개체가 없습니다";
-  document.getElementById("openSheet").disabled = !total || isClosed();
-  if(isClosed()){
-    document.getElementById("dockSum").innerHTML = `모집이 마감되었습니다. 10월 인도네시아 공동구매에 보내 주신 관심에 진심으로 감사드립니다. 건강한 개체 수입으로 보답드리겠습니다.<br><span class="mono">문의 · 문자 010-8212-3543</span>`;
-    document.getElementById("openSheet").textContent = "신청마감";
-    document.getElementById("openSheet").disabled = true;
-    document.getElementById("openEdit").hidden = true;
-  }
-}
-function renderAll(){ renderEach(); renderSets(); renderDock(); if(!panel.hidden) renderSheet(); }
-
-/* 신청서 */
-const panel=document.getElementById("panel"), scrim=document.getElementById("scrim");
-function totals(){
-  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number);
-  const sum=nos.reduce((a,n)=>a+(PRICE_KRW[n]||0)*cart[n],0);
-  const unpriced=nos.filter(n=>!PRICE_KRW[n]);
-  return {sum, count:nos.reduce((a,n)=>a+cart[n],0), unpriced:unpriced.length};
-}
-function renderTotal(){
-  const t=totals(), el=document.getElementById("total");
-  if(!t.count){ el.innerHTML=""; return; }
-  el.innerHTML=`<div class="row"><span>최종 입금액</span><b class="mono">${t.sum.toLocaleString("ko-KR")}원</b></div>`+
-    `<div class="sub">${t.count}개체${t.unpriced?` · 가격 미정 ${t.unpriced}종은 확정 안내 때 금액을 더해 알려드립니다`:""}</div>`;
-}
-function renderSheet(){
-  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
-  document.getElementById("lines").innerHTML = nos.map(n=>{const p=byNo[n]; return `<li>${imgTag(p)}<div><div class="bin">${esc(p.name)}</div><div class="mono">No.${String(n).padStart(2,"0")}${p.ind?" · "+p.ind:""} · ${PRICE_KRW[n]?PRICE_KRW[n].toLocaleString("ko-KR")+"원":"미정"}</div></div>${buyHtml(p)}</li>`;}).join("") || `<li><div></div><p class="hint">담은 개체가 없습니다.</p><div></div></li>`;
-  renderTotal();
-}
-let editMode=false, submitting=false, reqKey="";
-function loadLast(){
-  try{
-    const l=JSON.parse(localStorage.getItem("pm-last")||"null");
-    if(!l || !l.at || Date.now()-l.at > 48*3600*1000 || isClosed()){ localStorage.removeItem("pm-last"); return null; }
-    return l;
-  }catch(e){ return null; }
-}
-function resetPanel(){
-  if(submitting) return;
-  const btn=document.getElementById("submit");
-  btn.disabled=false; btn.textContent=editMode?"수정 신청":"신청";
-  document.getElementById("toast").textContent=""; document.getElementById("err").textContent="";
-  document.getElementById("editNote").hidden=!editMode;
-  document.getElementById("panelTitle").textContent=editMode?"신청 내용 수정":"공동구매 신청서";
-}
-function openSheet(){ if(!submitting) reqKey=""; editMode=false; resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus(); }
-function openEdit(){
-  if(isClosed()) return;
-  if(!submitting) reqKey="";
-  editMode=true;
-  const last=loadLast();
-  if(last){
-    ["name","tel","email","addr"].forEach(k=>{ const el=document.getElementById("f-"+k); if(!el.value.trim()) el.value=last[k]||""; });
-    if(!Object.keys(cart).length && last.cart){ cart=cleanCart(last.cart); save(); renderEach(); renderSets(); renderDock(); }
-  }
-  resetPanel(); panel.hidden=false; scrim.hidden=false; renderSheet(); document.getElementById("f-name").focus();
-}
-document.getElementById("openEdit").onclick=openEdit;
-function closeSheet(){ if(submitting) return; panel.hidden=true; scrim.hidden=true; }
-document.getElementById("openSheet").onclick=openSheet;
-document.getElementById("closeSheet").onclick=closeSheet;
-scrim.onclick=closeSheet;
-document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!panel.hidden) closeSheet(); });
-["f-name","f-tel","f-email","f-addr","f-agree","f-privacy"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{document.getElementById("err").textContent=""; if(!submitting) reqKey="";}));
-
-/* 바로 접수 (Apps Script) */
-function validate(){
-  const err=document.getElementById("err"), v=id=>document.getElementById(id).value.trim();
-  if(!v("f-name")||!v("f-tel")||!v("f-email")||!v("f-addr")){ err.textContent="이름, 전화번호, 이메일, 주소를 모두 적어 주십시오."; return false; }
-  if(!/^[0-9+\-\s()]{9,20}$/.test(v("f-tel"))){ err.textContent="전화번호를 숫자로 적어 주십시오. (예: 010-0000-0000)"; return false; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("f-email"))){ err.textContent="이메일 주소를 확인해 주십시오."; return false; }
-  if(!document.getElementById("f-agree").checked){ err.textContent="공동구매 안내 및 규정에 동의해 주셔야 신청할 수 있습니다."; return false; }
-  if(!document.getElementById("f-privacy").checked){ err.textContent="개인정보 수집·이용에 동의해 주셔야 신청할 수 있습니다."; return false; }
-  return true;
-}
-document.getElementById("rulesBox").innerHTML=document.getElementById("rulesBody").innerHTML;
-document.getElementById("submit").onclick=async()=>{
-  const toast=document.getElementById("toast"), btn=document.getElementById("submit"), err=document.getElementById("err");
-  if(isClosed()){ document.getElementById("err").textContent="모집이 마감되어 신청을 받지 않습니다. 문의는 문자(010-8212-3543)로 보내 주십시오."; return; }
-  if(submitting||!validate()) return;
-  const v=id=>document.getElementById(id).value.trim();
-  const nos=Object.keys(cart).filter(k=>cart[k]>0).map(Number).sort((a,b)=>a-b);
-  if(!nos.length){ err.textContent="담은 개체가 없습니다. 창을 닫고 개체를 담은 뒤 다시 시도해 주십시오."; return; }
-  const items=nos.map(n=>({no:n,name:byNo[n].name,ind:byNo[n].ind||"",qty:cart[n],price:PRICE_KRW[n]||0,img:byNo[n].img||""}));
-  if(!reqKey) reqKey=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,12));
-  const payload={key:reqKey,mode:editMode?"edit":"new",total:totals().sum,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),agree:true,hp:v("f-hp"),items};
-  const label=editMode?"수정 신청":"신청";
-  submitting=true; btn.disabled=true; btn.textContent="접수 중…"; document.getElementById("wait").hidden=false;
-  let j=null;
-  // 응답이 오류 화면이거나 상태 응답(service)뿐이면 다시 보냅니다.
-  // 같은 key로 보내므로 서버가 이미 기록한 신청은 새로 기록하지 않고 처음 접수번호를 돌려줍니다.
-  for(let attempt=0; attempt<3; attempt++){
-    try{
-      const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-      j=await r.json();
-    }catch(e){ j=null; }
-    if(j && (j.id || (j.ok===false && j.error))) break;   // 접수 완료, 또는 확정적인 거절(not_found 등)
-    j=null; if(attempt<2) await new Promise(res=>setTimeout(res,1500));
-  }
-  submitting=false;
-  document.getElementById("wait").hidden=true;
-  if(!j||!j.ok||!j.id){
-    btn.disabled=false; btn.textContent="다시 "+label;
-    const code=j&&j.error;
-    err.textContent = code==="not_found" ? "일치하는 신청을 찾지 못했습니다. 처음 신청할 때와 같은 이름과 전화번호를 입력해 주십시오."
-      : code==="locked" ? "이미 확정된 신청은 페이지에서 수정할 수 없습니다. 문자(010-8212-3543)로 문의해 주십시오."
-      : code==="closed" ? "모집이 마감되어 신청을 받지 않습니다. 문의는 문자(010-8212-3543)로 보내 주십시오."
-      : code==="busy" ? "짧은 시간에 신청이 많이 들어왔습니다. 10분 뒤 다시 시도해 주십시오."
-      : code==="missing_fields" ? "입력한 내용을 확인해 주십시오. 이름, 전화번호, 이메일, 주소와 담은 개체가 모두 필요합니다."
-      : "접수가 되지 않았습니다. 잠시 뒤 다시 시도하거나 문자(010-8212-3543)로 문의해 주십시오.";
-    return;
-  }
-  reqKey="";
-  const t=totals();
-  try{ localStorage.setItem("pm-last", JSON.stringify({at:Date.now(),id:j.id,name:v("f-name"),tel:v("f-tel"),email:v("f-email"),addr:v("f-addr"),cart:{...cart}})); }catch(e){}
-  btn.textContent=editMode?"수정 완료":"접수 완료";
-  showDone({id:j.id, sum:t.sum, name:v("f-name"), edit:editMode, replaced:j.replaced||[]});
-  cart={}; save(); renderEach(); renderSets(); renderDock();
-};
-
-/* 완료 화면 */
-const QUOTES=[
-  {en:"Adopt the pace of nature: her secret is patience.", ko:"자연의 속도를 따르십시오. 그 비밀은 인내입니다.", by:"Ralph Waldo Emerson"},
-  {en:"In every walk with nature one receives far more than he seeks.", ko:"자연 속을 걸을 때마다, 우리는 구한 것보다 훨씬 많은 것을 얻습니다.", by:"John Muir"}
-];
-function showDone(o){
-  document.getElementById("doneKicker").textContent = o.edit ? "수정 완료" + (o.replaced.length ? " · 이전 " + o.replaced.join(", ") + " 대체" : "") : "신청 완료";
-  document.getElementById("doneId").textContent = o.id;
-  document.getElementById("doneSum").textContent = o.sum.toLocaleString("ko-KR") + "원";
-  document.getElementById("doneName").textContent = o.name;
-  const q = QUOTES[Math.floor(Math.random()*QUOTES.length)];
-  document.getElementById("doneQuote").innerHTML = `<p class="en">“${esc(q.en)}”</p><p class="ko">${esc(q.ko)}</p><cite>— ${esc(q.by)}</cite>`;
-  panel.hidden=true; scrim.hidden=true;
-  const d=document.getElementById("done"); d.hidden=false; d.scrollTop=0;
-  document.getElementById("goHome").focus();
-}
-document.getElementById("goHome").onclick=()=>{
-  document.getElementById("done").hidden=true;
-  ["f-agree","f-privacy"].forEach(id=>document.getElementById(id).checked=false);
-  editMode=false; resetPanel();
-  window.scrollTo({top:0, behavior:"smooth"});
-};
-
-/* 마감 시각이 되면 열려 있는 페이지도 바로 마감 상태로 바꿈 */
-if(!isClosed()) setTimeout(()=>{ closeSheet(); renderDock(); }, CLOSE_AT.getTime()-Date.now()+1000);
-
-/* 수정 기능은 시트 코드가 지원할 때만 표시 */
-if(!isClosed()) fetch(ORDER_ENDPOINT).then(r=>r.json()).then(j=>{ if(j&&j.version>=2) document.getElementById("openEdit").hidden=false; }).catch(()=>{});
-
-/* 이벤트 */
-document.addEventListener("click",e=>{
-  const t=e.target.closest("button"); if(!t) return;
-  if((t.dataset.inc||t.dataset.dec||t.dataset.set) && !submitting) reqKey="";
-  if(t.dataset.inc){ const n=+t.dataset.inc; cart[n]=Math.min(20,(cart[n]||0)+1); save(); renderAll(); }
-  else if(t.dataset.dec){ const n=+t.dataset.dec; cart[n]=Math.max(0,(cart[n]||0)-1); if(!cart[n]) delete cart[n]; save(); renderAll(); }
-  else if(t.dataset.set){ const s=SETS.find(x=>x.id===t.dataset.set); s.items.forEach(n=>{ if(!cart[n]) cart[n]=1; }); save(); renderAll(); }
-  else if(t.dataset.isle){ isle=t.dataset.isle; document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.isle===isle)); renderEach(); }
-});
-document.getElementById("q").addEventListener("input",e=>{ q=e.target.value.trim().toLowerCase(); renderEach(); });
-function tab(which){
-  const sets=which==="sets";
-  document.getElementById("tab-each").setAttribute("aria-selected",!sets);
-  document.getElementById("tab-sets").setAttribute("aria-selected",sets);
-  document.getElementById("each").hidden=sets; document.getElementById("sets").hidden=!sets;
-  document.getElementById("filterWrap").hidden=sets; document.getElementById("searchWrap").hidden=sets;
-}
-document.getElementById("tab-each").onclick=()=>tab("each");
-document.getElementById("tab-sets").onclick=()=>tab("sets");
-if(location.hash==="#sets") tab("sets");
-loadLast(); // 오래된 개인정보 정리
-renderAll();
-</script>
 
 </body>
 </html>
